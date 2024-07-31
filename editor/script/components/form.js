@@ -18,4 +18,8 @@ export default class Form {
     getTranslate(){
         return [this.translateX, this.translateY]
     }
+
+    setZoom(zoom) {
+        this.form.style.zoom = zoom;
+    }
 }

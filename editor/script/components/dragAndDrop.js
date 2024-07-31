@@ -4,6 +4,8 @@ export default class DragAndDrop {
     draged = false;
     initalMouseTranslate = [];
     initalFormTranslate = [];
+    sensibility = 1;
+    zoom = 1;
 
     constructor(form, body){
         /**
@@ -31,20 +33,32 @@ export default class DragAndDrop {
 
         this.body.addEventListener("mousemove", (e) => {
             if(this.getDraged()) {
-                console.log(this.getInitalFormTranslate())
                 let actualX = e.pageX;
                 let actualY = e.pageY;
                 let [initalMouseX, initialMouseY] = this.getInitialMouseTranslate();
                 let [initalFormX, initalFormY] = this.getInitalFormTranslate();
 
-                this.form.setTranslate(initalFormX + actualX - initalMouseX, initalFormY + actualY - initialMouseY);
+                let newFormX = initalFormX + ((actualX - initalMouseX) * this.getSensibility())
+                let newFormY = initalFormY + ((actualY - initialMouseY) * this.getSensibility())
+
+                this.form.setTranslate(newFormX, newFormY);
             }
+        })
+
+        this.body.addEventListener("wheel", (e) => {
+            if(e.deltaY < 0) {
+                this.zoom += 0.1
+                this.setSensibility(this.getSensibility() / 1.065)
+            } else {
+                if(this.zoom > 0.2){
+                    this.zoom -= 0.1
+                    this.setSensibility(this.getSensibility() * 1.065)
+                }
+            }
+            this.form.setZoom(this.zoom)
         })
     }
 
-    /**
-    * @param {boolean} bool
-    */
     setDraged(bool){
         this.draged = bool
     }
@@ -64,5 +78,12 @@ export default class DragAndDrop {
     }
     getInitalFormTranslate() {
         return this.initalFormTranslate
+    }
+
+    setSensibility(sensibility) {
+        this.sensibility = sensibility;
+    }
+    getSensibility() {
+        return this.sensibility;
     }
 }
