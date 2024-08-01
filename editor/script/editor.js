@@ -4,10 +4,15 @@ import Fields from "./components/fields.js";
 import Menu from "./components/menu.js";
 import ListFields from "./components/listFields.js";
 
+const btnFields = {
+    "Heading" : document.getElementById("addHeading"),
+    "Input": document.getElementById("addInput")
+}
+
 const form = new Form(document.getElementById("form"))
 const dragAndDrop = new DragAndDrop(form, document.body)
 const listFields = new ListFields()
 const menu = new Menu(document.getElementById("menu"), listFields)
-const fields = new Fields(form, menu, listFields, document.getElementById("heading"))
+const fields = new Fields(form, menu, listFields, btnFields)
 
 menu.setFields(fields)

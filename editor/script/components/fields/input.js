@@ -1,6 +1,6 @@
-import Field from "./field.js"
+import Field from "./field.js";
 
-export default class Heading extends Field {
+export default class Input extends Field {
     text = "Some Title"
     size = "2em"
     align = "center"
@@ -8,8 +8,8 @@ export default class Heading extends Field {
     bgColor = ""
 
     constructor(name) {
-        super(name);
-        this.element = document.createElement("h1")
+        super(name)
+        this.element = document.createElement("input")
         this.element.innerText = this.text
         this.element.style.fontSize = this.size
         this.element.style.textAlign = this.align

@@ -1,15 +1,16 @@
 import Heading from "./fields/heading.js";
+import Input from "./fields/input.js";
 import Form from "./form.js";
 import ListFields from "./listFields.js";
 import Menu from "./menu.js";
 
 export default class Fields {
+    fields = {
+        "Heading" : Heading,
+        "Input" : Input
+    }
 
-    constructor(form, menu, listFields, heading){
-        /**
-        * @type {HTMLElement}
-        */
-        this.heading = heading
+    constructor(form, menu, listFields, btnFields){
         /**
         * @type {Form}
         */
@@ -22,22 +23,29 @@ export default class Fields {
         * @type {ListFields}
         */
         this.listFields = listFields
+        /**
+        * @type {HTMLElement[]}
+        */
+        this.btnFields = btnFields
 
         this.config();
     }
 
     config() {
-        this.heading.addEventListener("click", (e) => {
-            this.addHeading()
+        Object.entries(this.btnFields).map(([fieldName, button]) => {
+            button.addEventListener("click", (e) => {
+                this.createField(fieldName)
+            })
         })
     }
 
-    addHeading() {
-        let element = new Heading()
+    createField(fieldName) {
+        let quantFields = this.listFields.getList().length + 1
+        let element = new this.fields[fieldName](fieldName+quantFields)
         this.listFields.addField(element)
         this.menu.addMenuField(element)
 
-        this.form.addField(element.getHeading())
+        this.form.addField(element.getField())
     }
 
     reDrawFields() {
@@ -45,7 +53,7 @@ export default class Fields {
         this.form.clear()
         this.menu.clear()
         list.map((e) => {
-            this.form.addField(e.getHeading())
+            this.form.addField(e.getField())
             this.menu.addMenuField(e)
         })
     }
