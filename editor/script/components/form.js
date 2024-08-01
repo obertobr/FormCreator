@@ -7,13 +7,15 @@ export default class Form {
         * @type {HTMLElement}
         */
         this.form = form
+
+        this.setTranslate(0, -200)
     }
 
     setTranslate(x, y) {
         this.translateX = x;
         this.translateY = y;
 
-        this.form.style.translate = `${x}px ${y}px`
+        this.form.style.translate = `${x}px calc(${y}px + 50%)`
     }
     getTranslate(){
         return [this.translateX, this.translateY]
@@ -21,5 +23,16 @@ export default class Form {
 
     setZoom(zoom) {
         this.form.style.zoom = zoom;
+    }
+
+    /**
+    * @param {HTMLElement} field
+    */
+    addField(field){
+        this.form.appendChild(field);
+    }
+
+    clear() {
+        this.form.innerText = "";
     }
 }

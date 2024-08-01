@@ -22,13 +22,18 @@ export default class DragAndDrop {
 
     initialConfig() {
         this.body.addEventListener("mousedown", (e) => {
-            this.setDraged(true);
-            this.setInitialMouseTranslate(e.pageX, e.pageY);
-            this.setInitialFormTranslate(this.form.getTranslate());
+            if(e.target == document.body){
+                e.preventDefault()
+                this.setDraged(true);
+                this.setInitialMouseTranslate(e.pageX, e.pageY);
+                this.setInitialFormTranslate(this.form.getTranslate());
+            }
         })
 
         this.body.addEventListener("mouseup", (e) => {
-            this.setDraged(false);
+            if(e.target == document.body){
+                this.setDraged(false);
+            }
         })
 
         this.body.addEventListener("mousemove", (e) => {
@@ -46,6 +51,10 @@ export default class DragAndDrop {
         })
 
         this.body.addEventListener("wheel", (e) => {
+            if(e.target.closest("#menu")){
+                return;
+            }
+            
             if(e.deltaY < 0) {
                 this.zoom += 0.1
                 this.setSensibility(this.getSensibility() / 1.065)
