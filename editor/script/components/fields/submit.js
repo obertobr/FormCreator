@@ -12,7 +12,7 @@ export default class Submit extends Field {
         super(name)
         this.element = document.createElement("div")
         this.element.innerHTML = `
-            <input type="submit" value="">
+            <input type="submit">
         `
 
         this.element.classList.add("submit")

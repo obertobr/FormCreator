@@ -15,7 +15,7 @@ export default class Input extends Field {
                 <span class="title">Name</span>
                 <span class="subTitle">Complete Name</span>
             </div>
-            <input type="text">
+            <input type="text" class="field" fieldname="${this.name}">
         `
 
         this.element.classList.add("input")

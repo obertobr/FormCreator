@@ -35,4 +35,15 @@ export default class Form {
     clear() {
         this.form.innerText = "";
     }
+
+    exportForm() {
+        this.form.style = ""
+
+        const html = this.form.outerHTML
+
+        const [x, y] = this.getTranslate()
+        this.setTranslate(x, y)
+
+        return html
+    }
 }

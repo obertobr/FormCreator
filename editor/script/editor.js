@@ -17,3 +17,7 @@ const menu = new Menu(document.getElementById("menu"), listFields)
 const fields = new Fields(form, menu, listFields, btnFields)
 
 menu.setFields(fields)
+
+document.getElementById("export").addEventListener("click", (e) => {
+    console.log(form.exportForm())
+})
