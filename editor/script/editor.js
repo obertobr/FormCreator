@@ -6,7 +6,8 @@ import ListFields from "./components/listFields.js";
 
 const btnFields = {
     "Heading" : document.getElementById("addHeading"),
-    "Input": document.getElementById("addInput")
+    "Input": document.getElementById("addInput"),
+    "Submit": document.getElementById("addSubmit")
 }
 
 const form = new Form(document.getElementById("form"))

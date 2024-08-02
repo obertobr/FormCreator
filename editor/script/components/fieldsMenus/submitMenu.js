@@ -1,10 +1,10 @@
-import Heading from "../fields/heading.js"
-import FieldMenu from "./fieldMenu.js"
+import Submit from "../fields/submit.js";
+import FieldMenu from "./fieldMenu.js";
 
-export default class HeadingMenu extends FieldMenu{
-    /**
-     * @param {Heading} element
-     */
+export default class SubmitMenu extends FieldMenu {
+        /**
+         * @param {Submit} element 
+         */
     constructor(element, fields, listFields) {
         const html = `
             <div>
@@ -28,22 +28,28 @@ export default class HeadingMenu extends FieldMenu{
                 <input type="color">
             </div>
             <div class="half">
+                <label>Btn Color</label>
+                <input type="color" value="#ffffff">
+            </div>
+            <div>
                 <label>Bg Color</label>
                 <input type="color" value="#ffffff">
             </div>
         `
         const field = super(element, fields, listFields, html)
 
- 
+
         const input = field.querySelectorAll("input")
         const select = field.querySelector("select")
+
 
         const listInputs = [
             [input[0], "Text", "input"],
             [input[1], "Size", "input"],
             [select, "Aling", "change"],
             [input[2], "FontColor", "input"],
-            [input[3], "BgColor", "input"],
+            [input[3], "BtnColor", "input"],
+            [input[4], "BgColor", "input"],
         ]
 
         listInputs.forEach(([inputElement, name, typeInput]) => {
@@ -57,7 +63,6 @@ export default class HeadingMenu extends FieldMenu{
                 element[set](value)
             })
         })
-
 
         return field
     }

@@ -33,7 +33,7 @@ export default class Heading extends Field {
         return this.size
     }
 
-    setAlign(align) {
+    setAling(align) {
         this.align = align
         this.element.style.textAlign = align
     }

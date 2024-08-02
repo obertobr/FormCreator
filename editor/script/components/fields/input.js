@@ -1,28 +1,48 @@
 import Field from "./field.js";
 
 export default class Input extends Field {
-    text = "Some Title"
-    size = "2em"
+    title = "Name"
+    subTitle = "Complete Name"
     align = "center"
     fontColor = "#000000"
     bgColor = ""
 
     constructor(name) {
         super(name)
-        this.element = document.createElement("input")
-        this.element.innerText = this.text
-        this.element.style.fontSize = this.size
+        this.element = document.createElement("div")
+        this.element.innerHTML = `
+            <div>
+                <span class="title">Name</span>
+                <span class="subTitle">Complete Name</span>
+            </div>
+            <input type="text">
+        `
+
+        this.element.classList.add("input")
+        this.titleField = this.element.querySelector(".title")
+        this.subTitleField = this.element.querySelector(".subTitle")
+
+        this.titleField.innerText = this.title
+        this.subTitleField.innerText = this.subTitle
         this.element.style.textAlign = this.align
         this.element.style.color = this.fontColor
         this.element.style.backgroundColor = this.bgColor
     }
 
-    setText(text) {
-        this.text = text
-        this.element.innerText = text
+    setTitle(title) {
+        this.title = title
+        this.titleField.innerText = title
     }
-    getText(){
-        return this.text
+    getTitle(){
+        return this.title
+    }
+
+    setSubTitle(subTitle) {
+        this.subTitle = subTitle
+        this.subTitleField.innerText = subTitle
+    }
+    getSubTitle() {
+        return this.subTitle
     }
 
     setSize(size) {

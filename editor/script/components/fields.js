@@ -1,5 +1,6 @@
 import Heading from "./fields/heading.js";
 import Input from "./fields/input.js";
+import Submit from "./fields/submit.js";
 import Form from "./form.js";
 import ListFields from "./listFields.js";
 import Menu from "./menu.js";
@@ -7,7 +8,8 @@ import Menu from "./menu.js";
 export default class Fields {
     fields = {
         "Heading" : Heading,
-        "Input" : Input
+        "Input" : Input,
+        "Submit": Submit
     }
 
     constructor(form, menu, listFields, btnFields){
