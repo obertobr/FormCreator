@@ -6,16 +6,25 @@
 
 
 // Add menu page of plugin
-add_action( 'admin_menu', 'fmcr_teste_page' );
-function fmcr_teste_page() {
+add_action( 'admin_menu', 'fmcr_add_pages' );
+function fmcr_add_pages() {
     add_menu_page(
         'Teste',
         'FormCreator',
         'manage_options',
-        'slugTeste',
+        'fmcr',
         'fmcr_teste',
         plugin_dir_url(__FILE__) . 'images/placeholder.png',
         20
+    );
+
+    add_submenu_page(
+        'fmcr',
+        'Entries',
+        'Entries',
+        'manage_options',
+        'fmcr_entries',
+        'fmcr_entries'
     );
 }
 
@@ -23,22 +32,34 @@ function fmcr_teste_page() {
 function fmcr_teste() {
     include(plugin_dir_path(__FILE__) . "editor/teste.html");
 }
+// Import entries page
+function fmcr_entries() {
+    include(plugin_dir_path(__FILE__) . "entries/entries.html");
+}
 
 
 // Add style and script on form page
 add_action('admin_enqueue_scripts', 'fmcr_enqueue_scripts');
 function fmcr_enqueue_scripts($hook) {
-    if ($hook != 'toplevel_page_slugTeste') {
+    // Toplevel page
+    if ($hook == 'toplevel_page_slugTeste') {
+        wp_enqueue_style('fmcr-form-style', plugins_url('editor/style/fields.css', __FILE__));
+
+        wp_enqueue_script('fmcr-form-script', plugins_url('editor/script/form.js', __FILE__), array('jquery'), null, true);
+
+        wp_localize_script('fmcr-form-script', 'formScriptAjax', [
+            'url' => admin_url('admin-ajax.php')
+        ]);
+
         return;
     }
 
-    wp_enqueue_style('fmcr-form-style', plugins_url('editor/style/fields.css', __FILE__));
+    // Entries page
+    if($hook == 'formcreator_page_fmcr_entries') {
+        wp_enqueue_style('fmcr-form-style', plugins_url('entries/style/entries.css', __FILE__));
 
-    wp_enqueue_script('fmcr-form-script', plugins_url('editor/script/form.js', __FILE__), array('jquery'), null, true);
-
-    wp_localize_script('fmcr-form-script', 'formScriptAjax', [
-        'url' => admin_url('admin-ajax.php')
-      ]);
+        return;
+    }
 }
 
 //Create DB

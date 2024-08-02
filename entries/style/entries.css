@@ -1,0 +1,80 @@
+#fmcr-entries {
+    display: flex;
+    gap: 50px;
+    color: #2c3338;
+    margin-top: 50px;
+}
+
+#fmcr-list-entries {
+    width: 50%;
+}
+
+#fmcr-list-entries > h1 {
+    border: 1px solid #c3c4c7;
+    border-bottom: none;
+    background-color: white;
+    text-align: center;
+    font-weight: 600;
+    background-color: rgb(231, 231, 231);
+}
+
+#fmcr-list-entries tbody > tr {
+    cursor: pointer;
+    transition: all .1s;
+}
+
+#fmcr-list-entries tbody > tr:hover {
+    background-color: rgb(231, 231, 231);
+}
+
+#fmcr-list-entries tbody > tr.fmcr-selected {
+    background-color: rgba(0, 0, 255, 0.192);
+}
+
+#fmcr-entrie {
+    border: 1px solid #c3c4c7;
+    background-color: white;
+    width: 50%;
+}
+
+#fmcr-entrie > h1 {
+    border-bottom: 1px solid #c3c4c7;
+    text-align: center;
+    font-weight: 600;
+    background-color: rgb(231, 231, 231);
+}
+
+#fmcr-entrie-heading {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #c3c4c7;
+}
+
+#fmcr-entrie-heading > span {
+    line-height: 1.4em;
+    padding: 8px 10px;
+}
+
+#fmcr-entrie-body {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 20px;
+}
+
+#fmcr-entrie-body h2{
+    margin: 0px;
+}
+
+#fmcr-entrie-body hr {
+    width: 100%;
+    margin: 5px 0px;
+}
+
+.fmcr-entrie-cell {
+    width: 100%;
+}
+
+.fmcr-entrie-cell.fmcr-half {
+    width: calc(50% - 5px);
+}
