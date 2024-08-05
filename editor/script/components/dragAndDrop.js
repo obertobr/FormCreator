@@ -51,7 +51,7 @@ export default class DragAndDrop {
         })
 
         this.body.addEventListener("wheel", (e) => {
-            if(e.target.closest("#menu")){
+            if(e.target.closest("#menu") || e.target.closest("#header")){
                 return;
             }
             

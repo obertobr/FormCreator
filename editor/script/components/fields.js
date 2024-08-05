@@ -31,6 +31,8 @@ export default class Fields {
         this.btnFields = btnFields
 
         this.config();
+
+        this.menu.addMenuField(form)
     }
 
     config() {
@@ -54,6 +56,9 @@ export default class Fields {
         let list = this.listFields.getList()
         this.form.clear()
         this.menu.clear()
+
+        this.menu.addMenuField(this.form)
+
         list.map((e) => {
             this.form.addField(e.getField())
             this.menu.addMenuField(e)

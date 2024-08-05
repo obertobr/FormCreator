@@ -14,9 +14,96 @@ body {
     font-style: normal;
 }
 
+#header {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: 10px;
+    bottom: 0px;
+    left: 10px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+#navbar {
+    display: flex;
+    border-radius: 2px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.185);
+    width: fit-content;
+    overflow: hidden;
+    pointer-events: auto;
+}
+
+#navbar > button {
+    border: none;
+    padding: 8px;
+    background-color: rgb(173, 173, 173);
+    color: white;
+    font-size: 1.4em;
+    transition: background-color 0.1s;
+    cursor: pointer;
+    border-left: 1px solid rgb(167, 167, 167);
+}
+
+#navbar > button:hover {
+    background-color: rgb(155, 155, 155);
+}
+
+#navbar > button.selected {
+    background-color: rgb(153, 153, 153);
+}
+
+#view {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    height: 100%;
+    background-color: rgb(248, 248, 248);
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.185);
+    border-radius: 3px;
+    overflow: hidden;
+    margin: 5px 0px;
+    pointer-events: auto;
+}
+
+#view>div:not(#content) {
+    display: flex;
+    width: 100%;
+    background-color: rgb(201, 201, 201);
+    gap: 2px;
+}
+
+#view>div > button {
+    border: none;
+    background-color: white;
+    padding: 15px;
+    font-size: 1.2em;
+    width: 100%;
+    color: rgb(201, 201, 201);
+    border-radius: 0px 0px 5px 5px;
+    border-bottom: 2px solid rgb(201, 201, 201);
+    cursor: pointer;
+}
+
+#view>div > button.selected {
+    border: none;
+    border-radius: 0px;
+    color: black;
+    background-color: rgb(248, 248, 248);
+}
+
+#view>div > button:hover {
+    color: black;
+}
+
+#view>#content{
+    height: 100%;
+    overflow: auto;
+}
+
 #addField {
     position:absolute;
-    top: 5px;
+    top: 70px;
     left: 5px;
     display: flex;
     flex-direction: column;
