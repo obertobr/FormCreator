@@ -10,6 +10,9 @@ export default class Heading extends Field {
     constructor(name) {
         super(name);
         this.element = document.createElement("h1")
+        this.element.classList.add("heading")
+        this.element.setAttribute("fieldname", this.name)
+        this.element.setAttribute("fieldtitle", this.text)
         this.element.innerText = this.text
         this.element.style.fontSize = this.size
         this.element.style.textAlign = this.align
@@ -20,6 +23,7 @@ export default class Heading extends Field {
     setText(text) {
         this.text = text
         this.element.innerText = text
+        this.element.setAttribute("fieldtitle", text)
     }
     getText(){
         return this.text

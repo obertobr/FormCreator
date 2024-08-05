@@ -15,10 +15,12 @@ export default class Input extends Field {
                 <span class="title">Name</span>
                 <span class="subTitle">Complete Name</span>
             </div>
-            <input type="text" class="field" fieldname="${this.name}">
+            <input type="text" class="field">
         `
 
         this.element.classList.add("input")
+        this.element.setAttribute("fieldname", this.name)
+        this.element.setAttribute("fieldtitle", this.title)
         this.titleField = this.element.querySelector(".title")
         this.subTitleField = this.element.querySelector(".subTitle")
 
@@ -32,6 +34,7 @@ export default class Input extends Field {
     setTitle(title) {
         this.title = title
         this.titleField.innerText = title
+        this.element.setAttribute("fieldtitle", title)
     }
     getTitle(){
         return this.title

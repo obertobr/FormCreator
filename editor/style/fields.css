@@ -13,7 +13,7 @@
 }
 
 /* Heading */
-#form > h1 {
+#form > .heading {
     margin: 0;
     padding-block-start: 0.67em;
     padding-block-end: 0.67em;
