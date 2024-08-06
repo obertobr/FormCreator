@@ -7,8 +7,10 @@ export default class Heading extends Field {
     fontColor = "#000000"
     bgColor = ""
 
-    constructor(name) {
+    constructor(name, json) {
         super(name);
+        if(json){this.import(json)}
+
         this.element = document.createElement("h1")
         this.element.classList.add("heading")
         this.element.setAttribute("fieldname", this.name)
@@ -18,6 +20,19 @@ export default class Heading extends Field {
         this.element.style.textAlign = this.align
         this.element.style.color = this.fontColor
         this.element.style.backgroundColor = this.bgColor
+    }
+
+    export(){
+        let data = {
+            name: this.name,
+            text: this.text,
+            size: this.size,
+            align: this.align,
+            fontColor: this.fontColor,
+            bgColor: this.bgColor
+        }
+        
+        return data
     }
 
     setText(text) {

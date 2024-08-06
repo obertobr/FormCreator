@@ -43,9 +43,9 @@ export default class Fields {
         })
     }
 
-    createField(fieldName) {
+    createField(fieldName, json) {
         let quantFields = this.listFields.getList().length + 1
-        let element = new this.fields[fieldName](fieldName+quantFields)
+        let element = new this.fields[fieldName](fieldName+quantFields, json)
         this.listFields.addField(element)
         this.menu.addMenuField(element)
 
@@ -59,9 +59,35 @@ export default class Fields {
 
         this.menu.addMenuField(this.form)
 
-        list.map((e) => {
-            this.form.addField(e.getField())
-            this.menu.addMenuField(e)
+        list.forEach((field) => {
+            this.form.addField(field.getField())
+            this.menu.addMenuField(field)
+        })
+    }
+
+    exportFields() {
+        let list = this.listFields.getList()
+
+        let listExportFields = []
+
+        list.forEach((field) => {
+            listExportFields.push({
+                type: field.constructor.name,
+                content: field.export()
+            })
+        })
+
+        return listExportFields
+    }
+
+    importFields(listExpotedFields) {
+        this.form.clear()
+        this.menu.clear()
+
+        this.menu.addMenuField(this.form)
+
+        listExpotedFields.forEach((field) => {
+            this.createField(field.type, field.content)
         })
     }
 }

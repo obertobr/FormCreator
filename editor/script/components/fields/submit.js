@@ -8,8 +8,10 @@ export default class Submit extends Field {
     btnColor = "#5d7aff"
     bgColor = ""
 
-    constructor(name) {
+    constructor(name, json) {
         super(name)
+        if(json){this.import(json)}
+
         this.element = document.createElement("div")
         this.element.innerHTML = `
             <input type="submit">
@@ -24,6 +26,19 @@ export default class Submit extends Field {
         this.inputField.style.color = this.fontColor
         this.inputField.style.backgroundColor = this.btnColor
         this.element.style.backgroundColor = this.bgColor
+    }
+
+    export(){
+        let data = {
+            name: this.name,
+            text: this.text,
+            size: this.size,
+            align: this.align,
+            btnColor: this.btnColor,
+            bgColor: this.bgColor
+        }
+        
+        return data
     }
 
     setText(text) {

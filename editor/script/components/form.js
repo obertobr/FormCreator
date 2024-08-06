@@ -16,6 +16,27 @@ export default class Form {
         this.setTranslate(0, -200)
     }
 
+    export(){
+        let data = {
+            size: this.size,
+            bgColor: this.bgColor
+        }
+        
+        return data
+    }
+    import(json) {
+        Object.entries(json).forEach(([property, value]) => {
+            this[property] = value
+        })
+        
+        this.draw()
+    }
+
+    draw() {
+        this.form.style.width = this.size
+        this.form.style.backgroundColor = this.bgColor
+    }
+
     setTranslate(x, y) {
         this.translateX = x
         this.translateY = y

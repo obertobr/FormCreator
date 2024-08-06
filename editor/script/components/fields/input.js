@@ -7,8 +7,10 @@ export default class Input extends Field {
     fontColor = "#000000"
     bgColor = ""
 
-    constructor(name) {
+    constructor(name, json) {
         super(name)
+        if(json){this.import(json)}
+
         this.element = document.createElement("div")
         this.element.innerHTML = `
             <div>
@@ -29,6 +31,19 @@ export default class Input extends Field {
         this.element.style.textAlign = this.align
         this.element.style.color = this.fontColor
         this.element.style.backgroundColor = this.bgColor
+    }
+
+    export(){
+        let data = {
+            name: this.name,
+            title: this.title,
+            subTitle: this.subTitle,
+            align: this.align,
+            fontColor: this.fontColor,
+            bgColor: this.bgColor
+        }
+        
+        return data
     }
 
     setTitle(title) {

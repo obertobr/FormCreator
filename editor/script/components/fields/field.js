@@ -1,8 +1,14 @@
 export default class Field {
     menuOpen = false
 
-    constructor(name){
+    constructor(name, json){
         this.name = name;
+    }
+
+    import(json) {
+        Object.entries(json).forEach(([property, value]) => {
+            this[property] = value
+        })
     }
 
     remove() {
