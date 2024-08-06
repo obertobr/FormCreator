@@ -53,6 +53,13 @@ export default class FieldMenu {
             listFields.moveFieldDown(element)
             fields.reDrawFields()
         })
+
+        title.addEventListener("pointerover", (e) => {
+            element.setOutline(true)
+        })
+        title.addEventListener("pointerleave", (e) => {
+            element.setOutline(false)
+        })
     }
 
     getField() {

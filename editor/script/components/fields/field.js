@@ -1,5 +1,6 @@
 export default class Field {
     menuOpen = false
+    outline = false
 
     constructor(name, json){
         this.name = name;
@@ -38,5 +39,13 @@ export default class Field {
     }
     getWidth(){
         return this.width
+    }
+
+    setOutline(bool) {
+        this.outline = this.outline
+        this.element.style.outline = bool ? "2px dashed #ff00006e": ""
+    }
+    getOutline(){
+        return this.outline
     }
 }
