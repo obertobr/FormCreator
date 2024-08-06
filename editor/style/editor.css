@@ -248,3 +248,19 @@ body {
 #menu .hide {
     max-height: 0px;
 }
+
+#magnifier {
+    position: absolute;
+    width: 40px;
+    filter: opacity(20%);
+    bottom: 0px;
+    right: 255px;
+    margin: 5px;
+    cursor: pointer;
+    transition: all 0.1s;
+}
+
+#magnifier:hover{
+    filter: opacity(50%);
+    transform: scale(1.05);
+}

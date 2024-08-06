@@ -13,7 +13,7 @@ const btnFields = {
 }
 
 const form = new Form(document.getElementById("form"))
-const dragAndDrop = new DragAndDrop(form, document.body)
+const dragAndDrop = new DragAndDrop(form, document.body, document.getElementById("magnifier"))
 const listFields = new ListFields()
 const menu = new Menu(document.getElementById("menu"), listFields)
 const fields = new Fields(form, menu, listFields, btnFields)

@@ -7,7 +7,7 @@ export default class DragAndDrop {
     sensibility = 1;
     zoom = 1;
 
-    constructor(form, body){
+    constructor(form, body, magnifier){
         /**
         * @type {Form}
         */
@@ -16,6 +16,10 @@ export default class DragAndDrop {
         * @type {HTMLElement}
         */
         this.body = body
+        /**
+        * @type {HTMLElement}
+        */
+        this.magnifier = magnifier
 
         this.initialConfig()
     }
@@ -65,6 +69,12 @@ export default class DragAndDrop {
                 }
             }
             this.form.setZoom(this.zoom)
+        })
+
+        this.magnifier.addEventListener("click", (e) => {
+            this.zoom = 1
+            this.form.setZoom(this.zoom)
+            this.setSensibility(1)
         })
     }
 
