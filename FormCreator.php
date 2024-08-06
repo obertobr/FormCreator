@@ -5,6 +5,10 @@
  */
 
 
+//add_filter( 'wp_mail_from', function( $email ) {
+//    return 'rafael.azzi@hotmail.com';
+//} );
+
 // Add menu page of plugin
 add_action( 'admin_menu', 'fmcr_add_pages' );
 function fmcr_add_pages() {
@@ -66,6 +70,13 @@ function fmcr_enqueue_scripts($hook) {
 
         return;
     }
+}
+
+//send email
+function fmcr_send_email($sender_name, $sender_email, $to, $subject, $message) {
+    $header = 'From: '."=?UTF-8?B?".base64_encode($sender_email)."?=".' <'.$sender_email.'>';
+
+    return wp_mail( $to, $subject, $message, $header);
 }
 
 //Create DB
