@@ -9,17 +9,21 @@ export default class InputMenu extends FieldMenu {
         const html = `
             <div>
                 <label>Title</label>
-                <input type="text" value="name">
+                <input type="text">
             </div>
             <div>
                 <label>Sub Title</label>
-                <input type="text" value="name">
+                <input type="text">
             </div>
-            <div class="half">
-                <label>Size</label>
-                <input type="text" value="2em">
+            <div>
+                <label>PlaceHolder</label>
+                <input type="text">
             </div>
-            <div class="half">
+            <div>
+                <label>Column Width</label>
+                <input type="text">
+            </div>
+            <div class="">
                 <label>Align</label>
                 <select>
                     <option value="left">Left</option>
@@ -33,23 +37,34 @@ export default class InputMenu extends FieldMenu {
             </div>
             <div class="half">
                 <label>Bg Color</label>
-                <input type="color" value="#ffffff">
+                <input type="color">
+            </div>
+            <div class="half">
+                <label>Min Length</label>
+                <input type="text">
+            </div>
+            <div class="half">
+                <label>Max Length</label>
+                <input type="text">
             </div>
         `
-        const field = super(element, fields, listFields, html)
+        super(element, fields, listFields, html)
 
 
-        const input = field.querySelectorAll("input")
-        const select = field.querySelector("select")
+        const input = this.field.querySelectorAll("input")
+        const select = this.field.querySelector("select")
 
 
         const listInputs = [
             [input[0], "Title", "input"],
             [input[1], "SubTitle", "input"],
-            [input[2], "Size", "input"],
+            [input[2], "PlaceHolder", "input"],
+            [input[3], "Width", "input"],
             [select, "Aling", "change"],
-            [input[3], "FontColor", "input"],
-            [input[4], "BgColor", "input"],
+            [input[4], "FontColor", "input"],
+            [input[5], "BgColor", "input"],
+            [input[6], "MinLength", "input"],
+            [input[7], "MaxLength", "input"],
         ]
 
         listInputs.forEach(([inputElement, name, typeInput]) => {
@@ -63,7 +78,5 @@ export default class InputMenu extends FieldMenu {
                 element[set](value)
             })
         })
-
-        return field
     }
 }

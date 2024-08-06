@@ -17,10 +17,10 @@ const dragAndDrop = new DragAndDrop(form, document.body, document.getElementById
 const listFields = new ListFields()
 const menu = new Menu(document.getElementById("menu"), listFields)
 const fields = new Fields(form, menu, listFields, btnFields)
+menu.setFields(fields)
+
 const header = new Header(document.getElementById("navbar"), document.getElementById("view"))
 const saveAndLoad = new SaveAndLoad(form, fields)
-
-menu.setFields(fields)
 
 document.getElementById("exportHTML").addEventListener("click", (e) => {
     console.log(form.exportForm())

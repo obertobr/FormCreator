@@ -161,7 +161,7 @@ body {
     font-size: 1.5em;
     font-weight: 400;
     pointer-events: none;
-    transition: rotate 0.2s;
+    transition: rotate 0.3s;
 }
 
 #menu .title.on::after {
@@ -208,8 +208,7 @@ body {
     column-gap: 2%;
     row-gap: 3px;
     overflow-y: hidden;
-    max-height: 300px;
-    transition: max-height 0.2s;
+    transition: max-height 0.3s;
 }
 
 #menu .content > div {
@@ -243,10 +242,6 @@ body {
 
 #menu .content input[type=color] {
     width: 100%;
-}
-
-#menu .hide {
-    max-height: 0px;
 }
 
 #magnifier {

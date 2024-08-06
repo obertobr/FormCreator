@@ -3,9 +3,13 @@ import Field from "./field.js";
 export default class Input extends Field {
     title = "Name"
     subTitle = "Complete Name"
+    placeHolder = ""
+    width = "100%"
     align = "center"
     fontColor = "#000000"
     bgColor = ""
+    minLength = ""
+    maxLength = ""
 
     constructor(name, json) {
         super(name)
@@ -25,12 +29,17 @@ export default class Input extends Field {
         this.element.setAttribute("fieldtitle", this.title)
         this.titleField = this.element.querySelector(".title")
         this.subTitleField = this.element.querySelector(".subTitle")
+        this.input = this.element.querySelector("input")
 
         this.titleField.innerText = this.title
         this.subTitleField.innerText = this.subTitle
+        this.input.placholder = this.placeHolder
+        this.element.style.width = this.width
         this.element.style.textAlign = this.align
         this.element.style.color = this.fontColor
         this.element.style.backgroundColor = this.bgColor
+        this.input.minlength = this.minLength
+        this.input.maxlength = this.maxLength
     }
 
     export(){
@@ -38,9 +47,13 @@ export default class Input extends Field {
             name: this.name,
             title: this.title,
             subTitle: this.subTitle,
+            placeHolder: this.placeHolder,
+            width: this.width,
             align: this.align,
             fontColor: this.fontColor,
-            bgColor: this.bgColor
+            bgColor: this.bgColor,
+            minLength: this.minLength,
+            maxLength: this.maxLength
         }
         
         return data
@@ -61,6 +74,14 @@ export default class Input extends Field {
     }
     getSubTitle() {
         return this.subTitle
+    }
+
+    setPlaceHolder(placeHolder) {
+        this.placeHolder = placeHolder
+        this.input.placeholder = placeHolder
+    }
+    getPlaceHolder() {
+        return this.placeHolder
     }
 
     setSize(size) {
@@ -93,5 +114,22 @@ export default class Input extends Field {
     }
     getBgColor(){
         return this.bgColor
+    }
+
+    setMinLength(minLength) {
+        this.minLength = minLength
+        this.input.setAttribute("minlength", minLength)
+    }
+    getMinLength(){
+        return this.minLength
+    }
+
+    setMaxLength(maxLength) {
+        this.maxLength = maxLength
+        console.log("test")
+        this.input.setAttribute("maxlength", maxLength)
+    }
+    getMaxLength(){
+        return this.maxLength
     }
 }

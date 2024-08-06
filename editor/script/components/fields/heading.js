@@ -2,6 +2,7 @@ import Field from "./field.js"
 
 export default class Heading extends Field {
     text = "Some Title"
+    width = "100%"
     size = "2em"
     align = "center"
     fontColor = "#000000"
@@ -16,6 +17,8 @@ export default class Heading extends Field {
         this.element.setAttribute("fieldname", this.name)
         this.element.setAttribute("fieldtitle", this.text)
         this.element.innerText = this.text
+        this.element.style.width = this.width
+        this.element.innerText = this.text
         this.element.style.fontSize = this.size
         this.element.style.textAlign = this.align
         this.element.style.color = this.fontColor
@@ -26,6 +29,7 @@ export default class Heading extends Field {
         let data = {
             name: this.name,
             text: this.text,
+            width: this.width,
             size: this.size,
             align: this.align,
             fontColor: this.fontColor,

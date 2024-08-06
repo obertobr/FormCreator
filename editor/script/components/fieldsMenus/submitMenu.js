@@ -9,11 +9,15 @@ export default class SubmitMenu extends FieldMenu {
         const html = `
             <div>
                 <label>Name</label>
-                <input type="text" value="name">
+                <input type="text">
+            </div>
+            <div>
+                <label>Column width</label>
+                <input type="text">
             </div>
             <div class="half">
                 <label>Size</label>
-                <input type="text" value="2em">
+                <input type="text">
             </div>
             <div class="half">
                 <label>Align</label>
@@ -29,27 +33,28 @@ export default class SubmitMenu extends FieldMenu {
             </div>
             <div class="half">
                 <label>Btn Color</label>
-                <input type="color" value="#ffffff">
+                <input type="color">
             </div>
             <div>
                 <label>Bg Color</label>
-                <input type="color" value="#ffffff">
+                <input type="color">
             </div>
         `
-        const field = super(element, fields, listFields, html)
+        super(element, fields, listFields, html)
 
 
-        const input = field.querySelectorAll("input")
-        const select = field.querySelector("select")
+        const input = this.field.querySelectorAll("input")
+        const select = this.field.querySelector("select")
 
 
         const listInputs = [
             [input[0], "Text", "input"],
-            [input[1], "Size", "input"],
+            [input[1], "Width", "input"],
+            [input[2], "Size", "input"],
             [select, "Aling", "change"],
-            [input[2], "FontColor", "input"],
-            [input[3], "BtnColor", "input"],
-            [input[4], "BgColor", "input"],
+            [input[3], "FontColor", "input"],
+            [input[4], "BtnColor", "input"],
+            [input[5], "BgColor", "input"],
         ]
 
         listInputs.forEach(([inputElement, name, typeInput]) => {
@@ -63,7 +68,5 @@ export default class SubmitMenu extends FieldMenu {
                 element[set](value)
             })
         })
-
-        return field
     }
 }

@@ -1,9 +1,10 @@
 export default class FieldMenu {
-    constructor(element, fields, listFields, html) {
-        const field = document.createElement("div")
-        field.classList.add("cell")
 
-        field.innerHTML = `
+    constructor(element, fields, listFields, html) {
+        this.field = document.createElement("div")
+        this.field.classList.add("cell")
+
+        this.field.innerHTML = `
             <div class="title">
                 <div>
                     <span class="up">▲</span>
@@ -12,17 +13,17 @@ export default class FieldMenu {
                 <p></p>
                 <p class="delete">x</p>
             </div>
-            <div class="content ${element.getMenuOpen() ? "" : "hide" }">
+            <div class="content" style="max-height:${element.getMenuOpen() ? this.maxHeight : "0" }px">
                 ${html}
             </div>
         `
 
-        const up = field.querySelector(".up")
-        const down = field.querySelector(".down")
-        const title = field.querySelector(".title")
-        const content = field.querySelector(".content")
-        const name = field.querySelector("p")
-        const del = field.querySelector(".delete")
+        const up = this.field.querySelector(".up")
+        const down = this.field.querySelector(".down")
+        const title = this.field.querySelector(".title")
+        const content = this.field.querySelector(".content")
+        const name = this.field.querySelector("p")
+        const del = this.field.querySelector(".delete")
 
         name.innerText = element.getName()
 
@@ -30,18 +31,18 @@ export default class FieldMenu {
             if(e.target.closest(".up") || e.target.closest(".down")){
                 return
             }
-            if(content.classList.contains("hide")){
-                content.classList.remove("hide")
-                title.classList.add("on")
-            } else {
-                content.classList.add("hide")
+            if(element.getMenuOpen()){
+                content.style.maxHeight = `0px`
                 title.classList.remove("on")
+            } else {
+                content.style.maxHeight = `${this.maxHeight}px`
+                title.classList.add("on")
             }
             element.setMenuOpen(!element.getMenuOpen());
         })
         del.addEventListener("click", (e)=> {
             listFields.removeField(element)
-            field.remove()
+            this.field.remove()
         })
 
         up.addEventListener("click", (e) => {
@@ -52,7 +53,15 @@ export default class FieldMenu {
             listFields.moveFieldDown(element)
             fields.reDrawFields()
         })
+    }
 
-        return field
+    getField() {
+        return this.field
+    }
+
+    setHeight() {
+        const content = this.field.querySelector(".content")
+
+        this.maxHeight = content.scrollHeight
     }
 }

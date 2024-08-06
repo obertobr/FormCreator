@@ -1,5 +1,6 @@
 import Fields from "./fields.js";
 import Field from "./fields/field.js";
+import FieldMenu from "./fieldsMenus/fieldMenu.js";
 import FormMenu from "./fieldsMenus/formMenu.js";
 import HeadingMenu from "./fieldsMenus/headingMenu.js";
 import InputMenu from "./fieldsMenus/inputMenu.js";
@@ -41,8 +42,12 @@ export default class Menu {
     */
     addMenuField(element) {
         const [,menuField] = Object.entries(this.fieldMenus).find(([key,]) => key == element.constructor.name)
+        /**
+         * @type {FieldMenu}
+         */
         const menuCell = new menuField(element, this.fields, this.listFields)
 
-        this.menu.appendChild(menuCell)
+        this.menu.appendChild(menuCell.getField())
+        menuCell.setHeight()
     }
 }

@@ -1,13 +1,13 @@
 export default class FormMenu {
     constructor(element) {
-        const field = document.createElement("div")
-        field.classList.add("cell")
+        this.field = document.createElement("div")
+        this.field.classList.add("cell")
 
-        field.innerHTML = `
+        this.field.innerHTML = `
             <div class="title">
                 <p></p>
             </div>
-            <div class="content ${element.getMenuOpen() ? "" : "hide" }">
+            <div class="content" style="max-height:${element.getMenuOpen() ? this.maxHeight : "0" }px">
                 <div>
                     <label>Width</label>
                     <input type="text" value="500px">
@@ -19,9 +19,9 @@ export default class FormMenu {
             </div>
         `
 
-        const title = field.querySelector(".title")
-        const content = field.querySelector(".content")
-        const name = field.querySelector("p")
+        const title = this.field.querySelector(".title")
+        const content = this.field.querySelector(".content")
+        const name = this.field.querySelector("p")
 
         name.innerText = "form"
 
@@ -29,17 +29,17 @@ export default class FormMenu {
             if(e.target.closest(".up") || e.target.closest(".down")){
                 return
             }
-            if(content.classList.contains("hide")){
-                content.classList.remove("hide")
-                title.classList.add("on")
-            } else {
-                content.classList.add("hide")
+            if(element.getMenuOpen()){
+                content.style.maxHeight = `0px`
                 title.classList.remove("on")
+            } else {
+                content.style.maxHeight = `${this.maxHeight}px`
+                title.classList.add("on")
             }
             element.setMenuOpen(!element.getMenuOpen());
         })
 
-        const input = field.querySelectorAll("input")
+        const input = this.field.querySelectorAll("input")
 
         const listInputs = [
             [input[0], "Size", "input"],
@@ -58,6 +58,15 @@ export default class FormMenu {
             })
         })
 
-        return field
+    }
+
+    getField() {
+        return this.field
+    }
+
+    setHeight() {
+        const content = this.field.querySelector(".content")
+
+        this.maxHeight = content.scrollHeight
     }
 }

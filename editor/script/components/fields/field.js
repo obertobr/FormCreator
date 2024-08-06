@@ -31,4 +31,12 @@ export default class Field {
     getMenuOpen(){
         return this.menuOpen
     }
+
+    setWidth(width) {
+        this.width = width
+        this.element.style.width = width
+    }
+    getWidth(){
+        return this.width
+    }
 }

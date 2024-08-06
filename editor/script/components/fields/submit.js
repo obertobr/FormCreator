@@ -2,6 +2,7 @@ import Field from "./field.js";
 
 export default class Submit extends Field {
     text = "Submit Form"
+    width = "100%"
     size = "1.5em"
     align = "center"
     fontColor = "#ffffff"
@@ -21,6 +22,7 @@ export default class Submit extends Field {
         this.inputField = this.element.querySelector("input")
 
         this.inputField.value = this.text
+        this.element.style.width = this.width
         this.inputField.style.fontSize = this.size
         this.element.style.justifyContent = this.align
         this.inputField.style.color = this.fontColor
@@ -32,6 +34,7 @@ export default class Submit extends Field {
         let data = {
             name: this.name,
             text: this.text,
+            width: this.width,
             size: this.size,
             align: this.align,
             btnColor: this.btnColor,
