@@ -53,24 +53,33 @@ export default class FormPage {
         `
 
         const input = div.querySelector("input")
-        const btn = div.querySelector("div")
+        this.btn = div.querySelector("div")
 
         input.addEventListener("input", (e) => {
             this.setName(e.target.value)
         })
 
-        btn.addEventListener("click", (e) => {
-            console.log("test")
+        this.btn.addEventListener("click", (e) => {
             this.form.setPage(this)
+            this.select()
         })
 
         return div
+    }
+    
+    select() {
+        this.btn.classList.add("selected")
+    }
+
+    deselect() {
+        this.btn.classList.remove("selected")
     }
 
     clear() {
         this.formElement.innerText = ""
         this.formElement.appendChild(this.makePagination())
     }
+    
 
     getPosition() {
         return this.position

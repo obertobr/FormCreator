@@ -43,10 +43,15 @@ export default class Form {
     }
 
     setPage(formPage) {
+        this.listPages.forEach(page => {
+            page.deselect()
+        })
+
         this.selectedPage = formPage
         this.btnFields.setFormPage(formPage)
         this.menu.setPage(formPage)
         this.selectPage.value = formPage.getPosition()
+        formPage.select()
     }
 
     makeForm() {

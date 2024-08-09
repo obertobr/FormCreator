@@ -350,10 +350,14 @@ body {
     transition: all 0.1s;
 }
 
-.pagination > div:hover{
+.pagination > div:not(.selected):hover{
     transform: scale(1.1);
     background-color: #718ab9;
     user-select: none;
+}
+
+.pagination > div.selected {
+    background-color: #718ab9;
 }
 
 .pagination > input {
