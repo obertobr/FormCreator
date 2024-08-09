@@ -1,42 +1,75 @@
+import BtnFields from "./btnFields.js"
+import Fields from "./fields.js"
+import FormPage from "./formPage.js"
+import ListFields from "./listFields.js"
+import Menu from "./menu.js"
+
 export default class Form {
-    menuOpen = false
-
-    size = "500px"
-    bgColor = "#ffffff"
-
     translateX = 0
     translateY = 0
 
-    constructor(form) {
+    listPages = []
+
+    constructor(menu, btnFields, form, selectPage){
         /**
-        * @type {HTMLElement}
-        */
+         * @type {Menu}
+         */
+        this.menu = menu
+        /**
+         * @type {BtnFields}
+         */
+        this.btnFields = btnFields
+        /**
+         * @type {HTMLElement}
+         */
         this.form = form
+        /**
+         * @type {HTMLElement}
+         */
+        this.selectPage = selectPage
 
-        this.setTranslate(0, -200)
+        this.config()
+
+        this.makeForm()
     }
 
-    export(){
-        let data = {
-            size: this.size,
-            bgColor: this.bgColor
-        }
-        
-        return data
-    }
-    import(json) {
-        Object.entries(json).forEach(([property, value]) => {
-            this[property] = value
+    config() {
+        this.selectPage.addEventListener("change", (e) => {
+            const value = e.target.value
+            const formPage = this.listPages.find(page => page.getPosition() == value)
+            
+            this.setPage(formPage)
         })
+    }
+
+    setPage(formPage) {
+        this.selectedPage = formPage
+        this.btnFields.setFormPage(formPage)
+        this.menu.setPage(formPage)
+        this.selectPage.value = formPage.getPosition()
+    }
+
+    makeForm() {
+        const form = document.createElement("div")
+        form.classList.add("form")
+
+        this.form.appendChild(form)
+
+        const option = document.createElement("option")
+        option.value = this.listPages.length+1
+
+        const formPage = new FormPage(this.listPages.length+1 ,form, this, this.menu, option)
+
+        this.selectPage.appendChild(option)
+
+        this.listPages.push(formPage)
+        this.setPage(formPage)
+    }
+
+    getListPages() {
+        return this.listPages
+    }
         
-        this.draw()
-    }
-
-    draw() {
-        this.form.style.width = this.size
-        this.form.style.backgroundColor = this.bgColor
-    }
-
     setTranslate(x, y) {
         this.translateX = x
         this.translateY = y
@@ -49,50 +82,5 @@ export default class Form {
 
     setZoom(zoom) {
         this.form.style.zoom = zoom
-    }
-
-    /**
-    * @param {HTMLElement} field
-    */
-    addField(field){
-        this.form.appendChild(field)
-    }
-
-    clear() {
-        this.form.innerText = ""
-    }
-
-    exportForm() {
-        this.form.style = ""
-
-        const html = this.form.outerHTML
-
-        const [x, y] = this.getTranslate()
-        this.setTranslate(x, y)
-
-        return html
-    }
-
-    setMenuOpen(bool) {
-        this.menuOpen = bool
-    }
-    getMenuOpen(){
-        return this.menuOpen
-    }
-
-    setSize(size) {
-        this.size = size
-        this.form.style.width = size
-    }
-    getSize(){
-        return this.size
-    }
-
-    setBgColor(bgColor) {
-        this.bgColor = bgColor
-        this.form.style.backgroundColor = bgColor
-    }
-    getBgColor(){
-        return this.bgColor
     }
 }

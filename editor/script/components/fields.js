@@ -1,7 +1,7 @@
 import Heading from "./fields/heading.js";
 import Input from "./fields/input.js";
 import Submit from "./fields/submit.js";
-import Form from "./form.js";
+import FormPage from "./formPage.js";
 import ListFields from "./listFields.js";
 import Menu from "./menu.js";
 
@@ -12,82 +12,68 @@ export default class Fields {
         "Submit": Submit
     }
 
-    constructor(form, menu, listFields, btnFields){
+    constructor(formPage, menu){
         /**
-        * @type {Form}
+        * @type {FormPage}
         */
-        this.form = form
+        this.formPage = formPage
         /**
         * @type {Menu}
         */
         this.menu = menu
-        /**
-        * @type {ListFields}
-        */
-        this.listFields = listFields
-        /**
-        * @type {HTMLElement[]}
-        */
-        this.btnFields = btnFields
 
-        this.config();
-
-        this.menu.addMenuField(form)
+        this.listFields = new ListFields()
     }
 
-    config() {
-        Object.entries(this.btnFields).map(([fieldName, button]) => {
-            button.addEventListener("click", (e) => {
-                this.createField(fieldName)
-            })
-        })
+    getListFields() {
+        return this.listFields
     }
 
-    createField(fieldName, json) {
+    createField(fieldType, json) {
         let quantFields = this.listFields.getList().length + 1
-        let element = new this.fields[fieldName](fieldName+quantFields, json)
+        let element = new fieldType(quantFields, json)
         this.listFields.addField(element)
-        this.menu.addMenuField(element)
+        this.menu.addMenuField(element, this, this.listFields)
 
-        this.form.addField(element.getField())
+        this.formPage.addField(element.getField())
     }
 
     reDrawFields() {
         let list = this.listFields.getList()
-        this.form.clear()
+        this.formPage.clear()
         this.menu.clear()
 
-        this.menu.addMenuField(this.form)
+        this.menu.addMenuField(this.formPage, this, this.listFields)
 
         list.forEach((field) => {
-            this.form.addField(field.getField())
-            this.menu.addMenuField(field)
+            this.formPage.addField(field.getField())
+            this.menu.addMenuField(field, this, this.listFields)
         })
     }
 
-    exportFields() {
-        let list = this.listFields.getList()
+    // exportFields() {
+    //     let list = this.listFields.getList()
 
-        let listExportFields = []
+    //     let listExportFields = []
 
-        list.forEach((field) => {
-            listExportFields.push({
-                type: field.constructor.name,
-                content: field.export()
-            })
-        })
+    //     list.forEach((field) => {
+    //         listExportFields.push({
+    //             type: field.constructor.name,
+    //             content: field.export()
+    //         })
+    //     })
 
-        return listExportFields
-    }
+    //     return listExportFields
+    // }
 
-    importFields(listExpotedFields) {
-        this.form.clear()
-        this.menu.clear()
+    // importFields(listExpotedFields) {
+    //     this.formPage.clear()
+    //     this.menu.clear()
 
-        this.menu.addMenuField(this.form)
+    //     this.menu.addMenuField(this.formPage, this, this.listFields)
 
-        listExpotedFields.forEach((field) => {
-            this.createField(field.type, field.content)
-        })
-    }
+    //     listExpotedFields.forEach((field) => {
+    //         this.createField(field.type, field.content)
+    //     })
+    // }
 }

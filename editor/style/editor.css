@@ -14,8 +14,43 @@ body {
     font-style: normal;
 }
 
-#form {
+#forms {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 50px;
+    background-color: rgba(0, 0, 0, 0.050);
+    border-radius: 10px;
+    padding: 95px 20px 20px 20px;
+    pointer-events: none;
+}
+#forms > * {
+    pointer-events:all;
+}
+
+.form {
     overflow-x: visible;
+}
+
+#plus {
+    position: absolute;
+    background-color: rgb(175, 175, 175);
+    transform: translate(100%, -50%);
+    filter: opacity(40%);
+    border: 0;
+    padding: 0 0.3em;
+    border-radius: 100%;
+    font-size: 2em;
+    font-weight: 400;
+    top: 50%;
+    right: -20px;
+    cursor: pointer;
+    transition: all 0.1s;
+}
+
+#plus:hover {
+    filter: opacity(70%);
+    transform: translate(100%, -50%) scale(1.05);
 }
 
 #header {
@@ -141,6 +176,29 @@ body {
     overflow-y: auto;
 }
 
+#menu > select {
+    width: 100%;
+    text-align: center;
+    border: 0;
+    height: 40px;
+    font-size: 1.4em;
+    font-weight: 200;
+    background-color: #9ec0ff;
+    transition: filter 0.1s;
+}
+
+#menu > select:hover {
+    filter: brightness(0.9);
+}
+
+#menu > select:focus {
+    outline: 0;
+}
+
+#menu > select > option {
+    background-color: rgb(243, 243, 243);;
+}
+
 #menu .title {
     position: relative;
     display: flex;
@@ -263,4 +321,44 @@ body {
 #magnifier:hover{
     filter: opacity(50%);
     transform: scale(1.05);
+}
+
+/* pagination */
+.pagination {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    transform: translate(-50%, -100%);
+    left: 50%;
+    top: -30px;
+}
+
+.pagination > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5em;
+    height: 1.5em;
+    background-color: rgb(124, 124, 124);
+    font-weight: 700;
+    color: white;
+    font-size: 1.7em;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.1s;
+}
+
+.pagination > div:hover{
+    transform: scale(1.1);
+    background-color: #718ab9;
+    user-select: none;
+}
+
+.pagination > input {
+    width: 15ch;
+    font-size: 1.1em;
+    padding: 5px;
+    color: rgb(94, 94, 94);
 }

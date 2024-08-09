@@ -2,8 +2,8 @@ export default class Field {
     menuOpen = false
     outline = false
 
-    constructor(name, json){
-        this.name = name;
+    constructor(number, json){
+        this.name = this.constructor.name + number;
     }
 
     import(json) {
