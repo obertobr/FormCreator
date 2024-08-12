@@ -5,7 +5,7 @@
     position: relative;
     display: flex;
     flex-wrap: wrap;
-    width: 500px;
+    width: min-content;
     min-height: 50px;
     background-color: white;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.384);

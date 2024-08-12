@@ -3,8 +3,10 @@ jQuery(document).ready(function($){
     const submit = $("#forms input[type=submit]")
 
     function getFieldData() {
+        const pages = form.find(".form")
         let listFieldsValues = []
-        form.find(".form").each(function()  {
+
+        pages.each(function(index)  {
             $(this).children().each(function() {
                 if($(this).hasClass("submit")) { return }
     
@@ -26,12 +28,14 @@ jQuery(document).ready(function($){
                     name: name,
                 })
             })
-            listFieldsValues.push({
-                title: "",
-                value: "",
-                type: "Page break",
-                name: "",
-            })
+            if(index < pages.length-1){
+                listFieldsValues.push({
+                    title: "",
+                    value: "",
+                    type: "page break",
+                    name: "",
+                })
+            }
         })
         return listFieldsValues
     }
@@ -59,7 +63,6 @@ jQuery(document).ready(function($){
     submit.on("click", (e) => {
         e.preventDefault()
         sendFormData(getFieldData())
-        console.log(getFieldData())
     })
 
     function multiPage() {

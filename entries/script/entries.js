@@ -92,7 +92,7 @@ jQuery(document).ready(function($){
         body.empty()
 
         entry.fields.forEach(field => {
-            const cell = document.createElement("div")
+            let cell = document.createElement("div")
             if(field.type === "input"){
                 cell.classList.add("fmcr-entry-cell")
                 cell.innerHTML =
@@ -106,6 +106,8 @@ jQuery(document).ready(function($){
                     `
                     <span>${field.value}</span>
                     `
+            } else if(field.type === "page break"){
+                cell = document.createElement("hr")
             }
             body.append(cell)
         })
