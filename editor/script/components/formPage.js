@@ -31,11 +31,20 @@ export default class FormPage {
 
     export(){
         let data = {
+            name: this.name,
             size: this.size,
-            bgColor: this.bgColor
+            bgColor: this.bgColor,
+            fields: this.fields.exportFields()
         }
         
         return data
+    }
+
+    import(json){
+        this.setName(json.content.name)
+        this.setSize(json.content.size)
+        this.setBgColor(json.content.bgColor)
+        this.fields.importFields(json.content.fields)
     }
 
     addField(field){

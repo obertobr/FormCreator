@@ -1,31 +1,40 @@
 import Fields from "./fields.js"
 import Form from "./form.js"
+import FormPage from "./formPage.js"
 
 export default class SaveAndLoad {
-    constructor(form, fields){
+    constructor(form){
         /**
          * @type {Form}
          */
         this.form = form
-        /**
-         * @type {Fields}
-         */
-        this.fields = fields
     }
 
     export() {
-        const json = {
-            form: this.form.export(),
-            fields: this.fields.exportFields()
-        }
+        /**
+         * @type {FormPage[]}
+         */
+        const listPages = this.form.getListPages()
+
+        const json = []
+
+        listPages.forEach((page) => {
+            json.push({
+                id: page.getPosition(),
+                content: page.export()
+            })
+        })
 
         return JSON.stringify(json)
     }
 
     import(code) {
         const json = JSON.parse(code)
-
-        this.form.import(json.form)
-        this.fields.importFields(json.fields)
+        
+        this.form.clear()
+        
+        json.forEach(page => {
+            this.form.makeForm(page)
+        })
     }
 }

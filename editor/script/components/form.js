@@ -42,6 +42,13 @@ export default class Form {
         })
     }
 
+    clear() {
+        this.form.innerHTML = ""
+        this.selectPage.innerHTML = ""
+        this.listPages = []
+        this.selectedPage = null
+    }
+
     setPage(formPage) {
         this.listPages.forEach(page => {
             page.deselect()
@@ -54,7 +61,7 @@ export default class Form {
         formPage.select()
     }
 
-    makeForm() {
+    makeForm(json) {
         const form = document.createElement("div")
         form.classList.add("form")
 
@@ -69,6 +76,10 @@ export default class Form {
 
         this.listPages.push(formPage)
         this.setPage(formPage)
+
+        if(json){
+            formPage.import(json)
+        }
     }
 
     getListPages() {

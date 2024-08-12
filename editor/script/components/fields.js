@@ -51,29 +51,28 @@ export default class Fields {
         })
     }
 
-    // exportFields() {
-    //     let list = this.listFields.getList()
+    exportFields() {
+        let list = this.listFields.getList()
 
-    //     let listExportFields = []
+        let listExportFields = []
 
-    //     list.forEach((field) => {
-    //         listExportFields.push({
-    //             type: field.constructor.name,
-    //             content: field.export()
-    //         })
-    //     })
+        list.forEach((field) => {
+            listExportFields.push({
+                type: field.constructor.name,
+                content: field.export()
+            })
+        })
 
-    //     return listExportFields
-    // }
+        return listExportFields
+    }
 
-    // importFields(listExpotedFields) {
-    //     this.formPage.clear()
-    //     this.menu.clear()
+    importFields(listExpotedFields) {
+        this.menu.clear()
 
-    //     this.menu.addMenuField(this.formPage, this, this.listFields)
+        this.menu.addMenuField(this.formPage, this, this.listFields)
 
-    //     listExpotedFields.forEach((field) => {
-    //         this.createField(field.type, field.content)
-    //     })
-    // }
+        listExpotedFields.forEach((field) => {
+            this.createField(this.fields[field.type], field.content)
+        })
+    }
 }

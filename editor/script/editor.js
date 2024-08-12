@@ -20,7 +20,7 @@ const form = new Form(menu, btns, document.getElementById("forms"), document.get
 const dragAndDrop = new DragAndDrop(form, document.body, document.getElementById("magnifier"))
 
 const header = new Header(document.getElementById("navbar"), document.getElementById("view"))
-//const saveAndLoad = new SaveAndLoad(formPage, fields)
+const saveAndLoad = new SaveAndLoad(form)
 
 document.getElementById("exportHTML").addEventListener("click", (e) => {
     console.log(formPage.exportForm())
