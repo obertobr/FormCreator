@@ -23,7 +23,7 @@ const header = new Header(document.getElementById("navbar"), document.getElement
 const saveAndLoad = new SaveAndLoad(form)
 
 document.getElementById("exportHTML").addEventListener("click", (e) => {
-    console.log(formPage.exportForm())
+    console.log(form.generatePage())
 })
 
 document.getElementById("export").addEventListener("click", (e) => {

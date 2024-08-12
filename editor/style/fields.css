@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
-/* Form */
-.form {
+/* Forms */
+#forms {
     position: relative;
     display: flex;
     flex-wrap: wrap;
@@ -15,8 +15,38 @@
     overflow-x: hidden;
 }
 
+/* Form */
+#forms > .form:not(.visible){
+    display: none;
+}
+
+/* subMenu */
+#forms > #subMenu {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+#forms > #subMenu > button {
+    border: none;
+    background-color: transparent;
+    font-size: 2em;
+    width: 50%;
+    cursor: pointer;
+    transition: background-color 0.1s;
+}
+
+#forms > #subMenu > button:hover {
+    background-color: rgba(0, 0, 0, 0.103);
+}
+
+#forms > #subMenu > button:focus {
+    outline: none;
+}
+
 /* Heading */
 .form > .heading {
+    font-family: "Roboto", sans-serif;
     margin: 0;
     padding-block-start: 0.67em;
     padding-block-end: 0.67em;
@@ -26,6 +56,7 @@
 .form > .input {
     display: flex;
     justify-content: end;
+    box-sizing: border-box;
     gap: 5px;
     padding: 15px;
 }

@@ -1,7 +1,5 @@
 import BtnFields from "./btnFields.js"
-import Fields from "./fields.js"
 import FormPage from "./formPage.js"
-import ListFields from "./listFields.js"
 import Menu from "./menu.js"
 
 export default class Form {
@@ -80,6 +78,19 @@ export default class Form {
         if(json){
             formPage.import(json)
         }
+    }
+
+    generatePage() {
+        /**
+         * @type {HTMLElement}
+         */
+        const clone = this.form.cloneNode(true)
+
+        Array.from(clone.querySelectorAll(".pagination")).forEach((e) => {
+            e.remove()
+        })
+
+        console.log(clone.outerHTML)
     }
 
     getListPages() {

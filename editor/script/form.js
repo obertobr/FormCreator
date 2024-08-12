@@ -1,7 +1,6 @@
 jQuery(document).ready(function($){
-    const form = $("#form")
-    const submit = $("#form input[type=submit]")
-    const listFields = $(".field")
+    const form = $("#forms")
+    const submit = $("#forms input[type=submit]")
 
     function getFieldData() {
         let listFieldsValues = []
@@ -53,4 +52,41 @@ jQuery(document).ready(function($){
         e.preventDefault()
         sendFormData(getFieldData())
     })
+
+    function multiPage() {
+        let pages = $(".form")
+
+        if(pages.length > 1) {
+            const subMenu = document.createElement("div")
+            subMenu.id = "subMenu"
+            subMenu.innerHTML = `
+                <button>Anterior</button>
+                <button>Proximo</button>
+            `
+
+            form.append(subMenu)
+
+            let pageIndex = 0
+
+            $("#forms > #subMenu > button").eq(1).on("click", () => {
+                if(pageIndex < pages.length-1){
+                    pageIndex += 1
+    
+                    pages.removeClass("visible")
+                    pages.eq(pageIndex).addClass("visible")
+                }
+            })
+            $("#forms > #subMenu > button").eq(0).on("click", () => {
+                if(pageIndex > 0){
+                    pageIndex -= 1
+    
+                    pages.removeClass("visible")
+                    pages.eq(pageIndex).addClass("visible")
+                }
+            })
+
+            pages.eq(0).addClass("visible")
+        }
+    }
+    multiPage()
 })

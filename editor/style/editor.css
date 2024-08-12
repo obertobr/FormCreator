@@ -18,12 +18,37 @@ body {
     position: relative;
     display: flex;
     align-items: flex-start;
+    flex-wrap: initial;
+    width: auto;
+    min-height: auto;
+    box-shadow: none;
+    font-weight: initial;
+    overflow-x: initial;
     gap: 50px;
     background-color: rgba(0, 0, 0, 0.050);
     border-radius: 10px;
     padding: 95px 20px 20px 20px;
     pointer-events: none;
 }
+
+.form {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    width: 500px;
+    min-height: 50px;
+    background-color: white;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.384);
+    font-family: "Roboto", sans-serif;
+    font-weight: 300;
+    border-radius: 2px;
+    overflow-x: hidden;
+}
+
+#forms > .form:not(.visible){
+    display: flex;
+}
+
 #forms > * {
     pointer-events:all;
 }
