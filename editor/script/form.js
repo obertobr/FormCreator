@@ -4,25 +4,33 @@ jQuery(document).ready(function($){
 
     function getFieldData() {
         let listFieldsValues = []
-        form.children().each(function() {
-            if($(this).hasClass("submit")) { return }
-
-            let title = $(this).attr("fieldtitle")
-            let name = $(this).attr("fieldname")
-            let type = $(this).attr("class")
-            let value
-
-            if($(this).is("h1")){
-                value = $(this).text()
-            } else {
-                value = $(this).find("input").val()
-            }
-
+        form.find(".form").each(function()  {
+            $(this).children().each(function() {
+                if($(this).hasClass("submit")) { return }
+    
+                let title = $(this).attr("fieldtitle")
+                let name = $(this).attr("fieldname")
+                let type = $(this).attr("class")
+                let value
+    
+                if($(this).is("h1")){
+                    value = $(this).text()
+                } else {
+                    value = $(this).find("input").val()
+                }
+    
+                listFieldsValues.push({
+                    title: title,
+                    value: value,
+                    type: type,
+                    name: name,
+                })
+            })
             listFieldsValues.push({
-                title, title,
-                value: value,
-                type, type,
-                name: name,
+                title: "",
+                value: "",
+                type: "Page break",
+                name: "",
             })
         })
         return listFieldsValues
@@ -51,6 +59,7 @@ jQuery(document).ready(function($){
     submit.on("click", (e) => {
         e.preventDefault()
         sendFormData(getFieldData())
+        console.log(getFieldData())
     })
 
     function multiPage() {
