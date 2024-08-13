@@ -1,15 +1,15 @@
-#fmcr-entries {
+#fmcr-forms {
     display: flex;
     gap: 50px;
     color: #2c3338;
     margin-top: 50px;
 }
 
-#fmcr-list-entries {
-    width: 35%;
+#fmcr-list-forms {
+    width: 40%;
 }
 
-#fmcr-list-entries > div {
+#fmcr-list-forms > div {
     display: flex;
     justify-content: space-between;
     border: 1px solid #c3c4c7;
@@ -19,7 +19,7 @@
     background-color: rgb(231, 231, 231);
 }
 
-#fmcr-list-entries #fmcr-newForm {
+#fmcr-list-forms #fmcr-newForm {
     border: 1px solid rgb(121, 121, 241);
     background-color: rgb(147, 147, 255);
     color: white;
@@ -29,27 +29,42 @@
     transition: background-color 0.1s;
 }
 
-#fmcr-list-entries #fmcr-newForm:hover {
+#fmcr-list-forms #fmcr-newForm:hover {
     background-color: rgb(106, 106, 221);
 }
 
-#fmcr-list-entries tbody > tr {
+#fmcr-list-forms tbody > tr {
     cursor: pointer;
     transition: all .1s;
 }
 
-#fmcr-list-entries tbody > tr:hover {
+#fmcr-list-forms tbody > tr:hover {
     background-color: rgb(231, 231, 231);
 }
 
-#fmcr-list-entries tbody > tr.fmcr-selected {
+#fmcr-list-forms tbody > tr.fmcr-selected {
     background-color: rgba(0, 0, 255, 0.192);
+}
+
+#fmcr-list-forms .delete {
+    width: 1em;
+    font-weight: 700;
+    user-select: none;
+}
+
+#fmcr-list-forms .delete:hover{
+    color: red;
+    font-weight: 800;
+}
+
+#fmcr-list-forms tr:has(.delete:hover) {
+    background-color: rgba(255, 0, 0, 0.322);
 }
 
 #fmcr-entry {
     border: 1px solid #c3c4c7;
     background-color: white;
-    width: 75%;
+    width: 60%;
 }
 
 #fmcr-entry > h1 {

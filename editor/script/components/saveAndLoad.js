@@ -33,14 +33,16 @@ export default class SaveAndLoad {
         })
     }
 
-    import(json) {
-        this.form.clear()
+    import(json) {    
+        if(json.fields != null){
+            this.form.clear()
 
-        this.form.setFormName(json.formName)
+            json.fields.forEach(page => {
+                this.form.makeForm(page)
+            })
+        }
         
-        json.fields.forEach(page => {
-            this.form.makeForm(page)
-        })
+        this.form.setFormName(json.formName)
     }
 
     async save() {

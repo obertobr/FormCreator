@@ -90,7 +90,7 @@ function fmcr_enqueue_scripts($hook) {
             //Home
             wp_enqueue_style('fmcr-home-style', plugins_url('home/style/home.css', __FILE__));
 
-            wp_enqueue_script('fmcr-home-script', plugins_url('editor/script/form.js', __FILE__), array('jquery'), null, true);
+            wp_enqueue_script('fmcr-home-script', plugins_url('home/script/home.js', __FILE__), array('jquery'), null, true);
             wp_localize_script('fmcr-home-script', 'ajaxScript', [
                 'url' => admin_url('admin-ajax.php')
             ]);
@@ -239,17 +239,24 @@ function fmcr_getEntry() {
 }
 
 // create form
-add_action("wp_ajax_fmcr_saveForm", "fmcr_saveForm");
-add_action("wp_ajax_nopriv_fmcr_saveForm", "fmcr_saveForm");
+add_action("wp_ajax_fmcr_createForm", "fmcr_createForm");
+add_action("wp_ajax_nopriv_fmcr_createForm", "fmcr_createForm");
 function fmcr_createForm() {
     global $wpdb;
     $table_name = $wpdb->prefix . 'fmcr_forms';
 
+    $last_id = $wpdb->get_var("SELECT MAX(id) FROM $table_name");
+    if ($last_id === null) {
+        $last_id = 1;
+    } else {
+        $id = $last_id+1;
+    }
+
     $result = $wpdb->insert(
         $table_name,
         array(
-            'formName' => "teste",
-            'json' => "[]",
+            'formName' => "form$id",
+            'json' => "",
             'lastEditDate' => current_time('mysql'),
         )
     );
@@ -259,8 +266,38 @@ function fmcr_createForm() {
         wp_send_json_error(array("error" => "Failed to insert data into the database"), 500);
         exit();
     }
+
+    $id = $wpdb->insert_id;
     
-    wp_send_json_success(array("message" => "inserted successfully"), 200);
+    wp_send_json_success(array("message" => "inserted successfully", "id" => $id), 200);
+    exit();
+}
+
+// Delete form
+add_action("wp_ajax_fmcr_deleteForm", "fmcr_deleteForm");
+add_action("wp_ajax_nopriv_fmcr_deleteForm", "fmcr_deleteForm");
+function fmcr_deleteForm() {
+    $id = intval($_POST['id']);
+
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'fmcr_forms';
+
+    $result = $wpdb->delete(
+        $table_name,
+        array(
+            'id' => $id
+        )
+    );
+
+    if ($result === false) {
+        error_log("Failed to remove form of the database: " . $wpdb->last_error);
+        wp_send_json_error(array("error" => "Failed to remove form of the database"), 500);
+        exit();
+    }
+
+    $id = $wpdb->insert_id;
+    
+    wp_send_json_success(array("message" => "removed successfully"), 200);
     exit();
 }
 
@@ -307,15 +344,29 @@ function fmcr_getForm() {
 
     $table_name = $wpdb->prefix . 'fmcr_forms';
 
-    $entry = $wpdb->get_row( "SELECT * FROM $table_name WHERE id=$id" );
+    $form = $wpdb->get_row( "SELECT * FROM $table_name WHERE id=$id" );
 
-    $json = $entry->json;
+    $json = $form->json;
     $json = json_decode($json);
 
-    $entry->fields = $json;
+    $form->fields = $json;
     
-    unset($entry->json);
+    unset($form->json);
     
-    wp_send_json( $entry, 200);
+    wp_send_json( $form, 200);
+    exit();
+}
+
+// get Form
+add_action("wp_ajax_fmcr_getForms", "fmcr_getForms");
+add_action("wp_ajax_nopriv_fmcr_getForms", "fmcr_getForms");
+function fmcr_getForms() {
+    global $wpdb;
+
+    $table_name = $wpdb->prefix . 'fmcr_forms';
+
+    $forms = $wpdb->get_results( "SELECT id,formName,lastEditDate FROM $table_name" );
+    
+    wp_send_json( $forms, 200);
     exit();
 }
