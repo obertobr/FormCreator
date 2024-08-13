@@ -33,6 +33,7 @@ export default class Form {
         this.config()
 
         this.makeForm()
+        this.setTranslate(0, -200)
     }
 
     config() {
@@ -49,10 +50,14 @@ export default class Form {
     }
 
     clear() {
-        this.form.innerHTML = ""
+        this.form.innerHTML = "<button id=\"plus\">+</button>"
         this.selectPage.innerHTML = ""
         this.listPages = []
         this.selectedPage = null
+
+        document.getElementById("plus").addEventListener("click", (e) => {
+            this.makeForm()
+        })
     }
 
     setPage(formPage) {
