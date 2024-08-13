@@ -45,6 +45,7 @@ export default class FormPage {
         this.setSize(json.content.size)
         this.setBgColor(json.content.bgColor)
         this.fields.importFields(json.content.fields)
+        this.inputPagination.value = json.content.name
     }
 
     addField(field){
@@ -61,10 +62,10 @@ export default class FormPage {
             <input type="text" value="${this.name}" />
         `
 
-        const input = div.querySelector("input")
+        this.inputPagination = div.querySelector("input")
         this.btn = div.querySelector("div")
 
-        input.addEventListener("input", (e) => {
+        this.inputPagination.addEventListener("input", (e) => {
             this.setName(e.target.value)
         })
 

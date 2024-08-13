@@ -17,7 +17,7 @@ function fmcr_add_pages() {
         'FormCreator',
         'manage_options',
         'fmcr',
-        'fmcr_teste',
+        'fmcr_home',
         plugin_dir_url(__FILE__) . 'images/placeholder.png',
         20
     );
@@ -32,9 +32,15 @@ function fmcr_add_pages() {
     );
 }
 
-// Import form page
-function fmcr_teste() {
-    include(plugin_dir_path(__FILE__) . "editor/teste.html");
+// Import home page
+function fmcr_home() {
+    if(isset($_GET['id'])){
+        //Editor
+        include(plugin_dir_path(__FILE__) . "editor/editor.html");
+    } else {
+        //Home
+        include(plugin_dir_path(__FILE__) . "home/home.html");
+    }
 }
 // Import entries page
 function fmcr_entries() {
@@ -43,7 +49,9 @@ function fmcr_entries() {
 
 function fmcr_teste_shortcode() {
     ob_start();
+
     include(plugin_dir_path(__FILE__) . "editor/teste.html");
+
     return ob_get_clean();
 }
 
@@ -67,15 +75,26 @@ function fmcr_enqueue_scripts($hook) {
         return;
     }
 
-    // Toplevel page
+    // Home page
     if ($hook == 'toplevel_page_fmcr') {
-        wp_enqueue_style('fmcr-form-style', plugins_url('editor/style/fields.css', __FILE__));
+        if(isset($_GET['id'])){
+            //Editor
+            wp_enqueue_style('fmcr-home-fields-style', plugins_url('editor/style/fields.css', __FILE__));
+            wp_enqueue_style('fmcr-home-editor-style', plugins_url('editor/style/editor.css', __FILE__));
 
-        wp_enqueue_script('fmcr-form-script', plugins_url('editor/script/form.js', __FILE__), array('jquery'), null, true);
+            wp_enqueue_script_module('fmcr-home-script', plugins_url('editor/script/editor.js', __FILE__), array('jquery'));
+            $ajax_url = admin_url('admin-ajax.php');
+            $inline_script = "const ajaxurl = '{$ajax_url}';";
+            wp_add_inline_script('fmcr-home-script', $inline_script, 'before');
+        } else{
+            //Home
+            wp_enqueue_style('fmcr-home-style', plugins_url('home/style/home.css', __FILE__));
 
-        wp_localize_script('fmcr-form-script', 'ajaxScript', [
-            'url' => admin_url('admin-ajax.php')
-        ]);
+            wp_enqueue_script('fmcr-home-script', plugins_url('editor/script/form.js', __FILE__), array('jquery'), null, true);
+            wp_localize_script('fmcr-home-script', 'ajaxScript', [
+                'url' => admin_url('admin-ajax.php')
+            ]);
+        }
 
         return;
     }
@@ -105,7 +124,8 @@ function fmcr_send_email($sender_name, $sender_email, $to, $subject, $message) {
 function fmcr_create_database_table() {
     global $wpdb;
 
-    $table_name = $wpdb->prefix . 'fmcr_form';
+    //Entries DB
+    $table_name = $wpdb->prefix . 'fmcr_entries';
 
     $charset_collate = $wpdb->get_charset_collate();
 
@@ -120,6 +140,20 @@ function fmcr_create_database_table() {
     ) $charset_collate;";
 
     require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+    dbDelta( $sql );
+
+    //Forms DB
+    $table_name = $wpdb->prefix . 'fmcr_forms';
+
+    $sql = "CREATE TABLE $table_name (
+        id mediumint(9) NOT NULL AUTO_INCREMENT,
+        formName tinytext NOT NULL,
+        json text NOT NULL,
+        lastEditDate datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+        createDate datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+        PRIMARY KEY  (id)
+    ) $charset_collate;";
+
     dbDelta( $sql );
 }
 
@@ -141,7 +175,7 @@ function fmcr_saveFormData() {
     $data = json_decode($data);
 
     global $wpdb;
-    $table_name = $wpdb->prefix . 'fmcr_form';
+    $table_name = $wpdb->prefix . 'fmcr_entries';
 
     $result = $wpdb->insert(
         $table_name,
@@ -171,7 +205,7 @@ function fmcr_getEntries() {
     
     global $wpdb;
 
-    $table_name = $wpdb->prefix . 'fmcr_form';
+    $table_name = $wpdb->prefix . 'fmcr_entries';
 
     $results = $wpdb->get_results( "SELECT id,formName,data FROM $table_name" );
 
@@ -189,7 +223,89 @@ function fmcr_getEntry() {
     
     global $wpdb;
 
-    $table_name = $wpdb->prefix . 'fmcr_form';
+    $table_name = $wpdb->prefix . 'fmcr_entries';
+
+    $entry = $wpdb->get_row( "SELECT * FROM $table_name WHERE id=$id" );
+
+    $json = $entry->json;
+    $json = json_decode($json);
+
+    $entry->fields = $json;
+    
+    unset($entry->json);
+    
+    wp_send_json( $entry, 200);
+    exit();
+}
+
+// create form
+add_action("wp_ajax_fmcr_saveForm", "fmcr_saveForm");
+add_action("wp_ajax_nopriv_fmcr_saveForm", "fmcr_saveForm");
+function fmcr_createForm() {
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'fmcr_forms';
+
+    $result = $wpdb->insert(
+        $table_name,
+        array(
+            'formName' => "teste",
+            'json' => "[]",
+            'lastEditDate' => current_time('mysql'),
+        )
+    );
+
+    if ($result === false) {
+        error_log("Failed to insert data into the database: " . $wpdb->last_error);
+        wp_send_json_error(array("error" => "Failed to insert data into the database"), 500);
+        exit();
+    }
+    
+    wp_send_json_success(array("message" => "inserted successfully"), 200);
+    exit();
+}
+
+// save form
+add_action("wp_ajax_fmcr_saveForm", "fmcr_saveForm");
+add_action("wp_ajax_nopriv_fmcr_saveForm", "fmcr_saveForm");
+function fmcr_saveForm() {
+    $id = intval($_POST['id']);
+    $data = $_POST['data'];
+    $data = str_replace('\\','', $data);
+    $data = json_decode($data);
+
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'fmcr_forms';
+
+    $result = $wpdb->update(
+        $table_name,
+        array(
+            'formName' => $data->name,
+            'json' => json_encode($data->pages),
+            'lastEditDate' => current_time('mysql'),
+        ), array(
+            'id' => $id
+        )
+    );
+
+    if ($result === false) {
+        error_log("Failed to update data into the database: " . $wpdb->last_error);
+        wp_send_json_error(array("error" => "Failed to update data into the database"), 500);
+        exit();
+    }
+    
+    wp_send_json_success(array("message" => "updated successfully"), 200);
+    exit();
+}
+
+// get Form
+add_action("wp_ajax_fmcr_getForm", "fmcr_getForm");
+add_action("wp_ajax_nopriv_fmcr_getForm", "fmcr_getForm");
+function fmcr_getForm() {
+    $id = $_POST['id'];
+    
+    global $wpdb;
+
+    $table_name = $wpdb->prefix . 'fmcr_forms';
 
     $entry = $wpdb->get_row( "SELECT * FROM $table_name WHERE id=$id" );
 

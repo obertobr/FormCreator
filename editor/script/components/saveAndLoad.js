@@ -8,6 +8,8 @@ export default class SaveAndLoad {
          * @type {Form}
          */
         this.form = form
+
+        this.load()
     }
 
     export() {
@@ -25,16 +27,55 @@ export default class SaveAndLoad {
             })
         })
 
-        return JSON.stringify(json)
+        return JSON.stringify({
+            name: this.form.getFormName(),
+            pages: json
+        })
     }
 
-    import(code) {
-        const json = JSON.parse(code)
-        
+    import(json) {
         this.form.clear()
+
+        this.form.setFormName(json.formName)
         
-        json.forEach(page => {
+        json.fields.forEach(page => {
             this.form.makeForm(page)
+        })
+    }
+
+    async save() {
+        const json = this.export()
+
+        const response = await this.ajaxFetch({
+            action: "fmcr_saveForm",
+            data: json
+        })
+        
+        console.log(response)
+    }
+
+    async load() {
+        const response = await this.ajaxFetch({
+            action: "fmcr_getForm"
+        })
+
+        this.import(response)
+    }
+
+    async ajaxFetch(content) {
+        const urlParams = new URLSearchParams(window.location.search);
+
+        return await fetch(ajaxurl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+                ...content,
+                id: urlParams.get("id")
+            })
+        }).then(response => {
+            return response.json()
         })
     }
 }

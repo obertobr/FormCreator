@@ -26,7 +26,7 @@ export default class DragAndDrop {
 
     initialConfig() {
         this.body.addEventListener("mousedown", (e) => {
-            if(e.target == document.body){
+            if(e.target.classList.contains("fmcr")){
                 e.preventDefault()
                 this.setDraged(true);
                 this.setInitialMouseTranslate(e.pageX, e.pageY);
@@ -35,9 +35,7 @@ export default class DragAndDrop {
         })
 
         this.body.addEventListener("mouseup", (e) => {
-            if(e.target == document.body){
-                this.setDraged(false);
-            }
+            this.setDraged(false);
         })
 
         this.body.addEventListener("mousemove", (e) => {

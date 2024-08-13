@@ -8,7 +8,7 @@ export default class Form {
 
     listPages = []
 
-    constructor(menu, btnFields, form, selectPage){
+    constructor(menu, btnFields, form, selectPage, formName){
         /**
          * @type {Menu}
          */
@@ -25,6 +25,10 @@ export default class Form {
          * @type {HTMLElement}
          */
         this.selectPage = selectPage
+        /**
+         * @type {HTMLElement}
+         */
+        this.formName = formName
 
         this.config()
 
@@ -37,6 +41,10 @@ export default class Form {
             const formPage = this.listPages.find(page => page.getPosition() == value)
             
             this.setPage(formPage)
+        })
+
+        this.formName.addEventListener("input", (e) => {
+            this.setFormName(e.target.value)
         })
     }
 
@@ -91,6 +99,16 @@ export default class Form {
         })
 
         console.log(clone.outerHTML)
+    }
+
+    setFormName(name) {
+        this.name = name
+        this.form.setAttribute("formname", name)
+        this.formName.value = name
+    }
+
+    getFormName() {
+        return this.name
     }
 
     getListPages() {

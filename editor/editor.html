@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="script/editor.js" type="module"></script>
-    <link rel="stylesheet" href="style/fields.css">
-    <link rel="stylesheet" href="style/editor.css">
-</head>
-<body>
+<div class="fmcr">
     <div id="menu">
         <select id="selectPage">
         </select>
@@ -20,8 +10,12 @@
         <div id="navbar">
             <button>Settings</button>
             <button id="exportHTML">Gerar HTML</button>
+            <button id="save">Salvar</button>
             <button id="export">Exportar</button>
             <button id="import">Importar</button>
+        </div>
+        <div id="nameBar">
+            <input type="text" id="formName" />
         </div>
         <div id="view" style="display: none;">
             <div>
@@ -40,6 +34,5 @@
     <div id="forms">
         <button id="plus">+</button>
     </div>
-    <img id="magnifier" src="./../images/magnifier.svg" />
-</body>
-</html>
+    <img id="magnifier" src="<?php echo esc_url( plugins_url( '../images/magnifier.svg', __FILE__ ) ); ?>" />
+</div>

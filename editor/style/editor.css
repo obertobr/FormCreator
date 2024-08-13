@@ -1,16 +1,29 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
-body {
-    background-color: rgb(224, 224, 224);
+#wpcontent {
+    margin-left: 140px;
+}
+
+.folded #wpcontent {
+    margin-left: 16px;
+}
+
+#wpfooter {
+    pointer-events: none;
+}
+
+.fmcr {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
     background-size: 40px 40px;
-    height: 100vh;
-    margin: 0;
+    height: calc(100vh - 32px);
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
     font-family: "Roboto", sans-serif;
-    font-weight: 300;
     font-style: normal;
 }
 
@@ -85,6 +98,7 @@ body {
     top: 10px;
     bottom: 0px;
     left: 10px;
+    right: 265px;
     z-index: 2;
     pointer-events: none;
 }
@@ -165,6 +179,18 @@ body {
     overflow: auto;
 }
 
+#nameBar {
+    position: absolute;
+    right: 0px;
+}
+
+#formName {
+    padding: 8px;
+    font-size: 1.4em;
+    pointer-events: all;
+    line-height: normal;
+}
+
 #addField {
     position:absolute;
     top: 70px;
@@ -201,11 +227,12 @@ body {
     overflow-y: auto;
 }
 
-#menu > select {
+#menu > #selectPage {
     width: 100%;
     text-align: center;
     border: 0;
     height: 40px;
+    margin: 0;
     font-size: 1.4em;
     font-weight: 200;
     background-color: #9ec0ff;

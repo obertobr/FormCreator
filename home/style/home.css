@@ -1,0 +1,70 @@
+#fmcr-entries {
+    display: flex;
+    gap: 50px;
+    color: #2c3338;
+    margin-top: 50px;
+}
+
+#fmcr-list-entries {
+    width: 35%;
+}
+
+#fmcr-list-entries > div {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid #c3c4c7;
+    border-bottom: none;
+    background-color: white;
+    font-weight: 600;
+    background-color: rgb(231, 231, 231);
+}
+
+#fmcr-list-entries #fmcr-newForm {
+    border: 1px solid rgb(121, 121, 241);
+    background-color: rgb(147, 147, 255);
+    color: white;
+    border-radius:10px;
+    margin: 5px;
+    cursor: pointer;
+    transition: background-color 0.1s;
+}
+
+#fmcr-list-entries #fmcr-newForm:hover {
+    background-color: rgb(106, 106, 221);
+}
+
+#fmcr-list-entries tbody > tr {
+    cursor: pointer;
+    transition: all .1s;
+}
+
+#fmcr-list-entries tbody > tr:hover {
+    background-color: rgb(231, 231, 231);
+}
+
+#fmcr-list-entries tbody > tr.fmcr-selected {
+    background-color: rgba(0, 0, 255, 0.192);
+}
+
+#fmcr-entry {
+    border: 1px solid #c3c4c7;
+    background-color: white;
+    width: 75%;
+}
+
+#fmcr-entry > h1 {
+    border-bottom: 1px solid #c3c4c7;
+    font-weight: 600;
+    background-color: rgb(231, 231, 231);
+}
+
+#fmcr-entry-body {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 20px;
+}
+
+#fmcr-entry-body h2{
+    margin: 0px;
+}
