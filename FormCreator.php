@@ -127,11 +127,15 @@ function fmcr_enqueue_scripts($hook) {
 }
 
 // Include init (On plugin activate)
-require_once plugin_dir_path(__FILE__) . '/init.php';
+require_once plugin_dir_path(__FILE__) . '/activateAndUninstall.php';
 
 register_activation_hook( __FILE__, 'fmcr_activate' );
 function fmcr_activate() {
     fmcr_create_database_table();
+}
+register_uninstall_hook( __FILE__, 'fmcr_uninstall' );
+function fmcr_uninstall() {
+    fmcr_delete_database_table();
 }
 
 // email utils

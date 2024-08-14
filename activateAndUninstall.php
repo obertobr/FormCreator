@@ -51,3 +51,7 @@ function fmcr_create_database_table() {
 
     dbDelta( $sql );
 }
+
+//Delete DB
+function fmcr_delete_database_table() {
+}
