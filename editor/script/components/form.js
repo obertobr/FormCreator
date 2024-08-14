@@ -140,7 +140,7 @@ export default class Form {
         return [this.translateX, this.translateY]
     }
 
-    setZoom(zoom) {
-        this.form.style.zoom = zoom
+    setZoom(scale) {
+        this.form.style.scale = scale
     }
 }
