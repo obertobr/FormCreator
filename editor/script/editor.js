@@ -19,19 +19,6 @@ const dragAndDrop = new DragAndDrop(form, document.body, document.getElementById
 const header = new Header(document.getElementById("navbar"), document.getElementById("view"))
 const saveAndLoad = new SaveAndLoad(form)
 
-document.getElementById("exportHTML").addEventListener("click", (e) => {
-    console.log(form.generatePage())
-})
-
-document.getElementById("export").addEventListener("click", (e) => {
-    console.log(saveAndLoad.export())
-})
-
-document.getElementById("import").addEventListener("click", (e) => {
-    let json = prompt("Cole o codigo")
-    saveAndLoad.import(json)
-})
-
 document.getElementById("save").addEventListener("click", (e) => {
     saveAndLoad.save()
 })
