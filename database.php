@@ -39,7 +39,7 @@ function fmcr_saveFormData() {
             $email->senderEmail,
             $email->sendEmailTo,
             "[".$data->name."] - form entry",
-            json_encode($data->fields)
+            fmcr_draw_email($data->fields)
         );
 
         if( $validation == false ) {

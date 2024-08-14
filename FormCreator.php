@@ -126,13 +126,6 @@ function fmcr_enqueue_scripts($hook) {
     }
 }
 
-// Send email
-function fmcr_send_email($sender_name, $sender_email, $to, $subject, $message) {
-    $header = 'From: '."=?UTF-8?B?".base64_encode($sender_name)."?=".' <'.$sender_email.'>';
-
-    return wp_mail( $to, $subject, $message, $header);
-}
-
 // Include init (On plugin activate)
 require_once plugin_dir_path(__FILE__) . '/init.php';
 
@@ -140,6 +133,9 @@ register_activation_hook( __FILE__, 'fmcr_activate' );
 function fmcr_activate() {
     fmcr_create_database_table();
 }
+
+// email utils
+require_once plugin_dir_path(__FILE__) . '/email.php';
 
 // Include database functions
 require_once plugin_dir_path(__FILE__) . '/database.php';
