@@ -28,7 +28,25 @@ function fmcr_saveFormData() {
         wp_send_json_error(array("error" => "Failed to insert data into the database"), 500);
         exit();
     }
-    
+
+    $table_name = $wpdb->prefix . 'fmcr_forms';
+
+    $email = $wpdb->get_row( "SELECT senderName,senderEmail,sendEmailTo FROM $table_name WHERE id=$data->id" );
+
+    if ($email->senderEmail != "" and $email->sendEmailTo != "") {
+        $validation = fmcr_send_email(
+            $email->senderName,
+            $email->senderEmail,
+            $email->sendEmailTo,
+            "[".$data->name."] - form entry",
+            json_encode($data->fields)
+        );
+
+        if( $validation == false ) {
+            error_log("Failed to send email");
+        }
+    }
+
     wp_send_json_success(array("message" => "Added successfully"), 200);
     exit();
 }
@@ -124,6 +142,9 @@ function fmcr_createForm() {
             'formName' => "form$id",
             'json' => "",
             'lastEditDate' => current_time('mysql'),
+            'senderName' => "",
+            'senderEmail' => "",
+            'sendEmailTo' => "",
         )
     );
 
@@ -177,6 +198,9 @@ function fmcr_saveForm() {
     $data = $_POST['data'];
     $data = str_replace('\\','', $data);
     $data = json_decode($data);
+    $settings = $_POST['settings'];
+    $settings = str_replace('\\','', $settings);
+    $settings = json_decode($settings);
 
     global $wpdb;
     $table_name = $wpdb->prefix . 'fmcr_forms';
@@ -187,6 +211,9 @@ function fmcr_saveForm() {
             'formName' => $data->name,
             'json' => json_encode($data->pages),
             'lastEditDate' => current_time('mysql'),
+            'senderName' => $settings->email->senderName,
+            'senderEmail' => $settings->email->senderEmail,
+            'sendEmailTo' => $settings->email->sendEmailTo,
         ), array(
             'id' => $id
         )
@@ -202,7 +229,7 @@ function fmcr_saveForm() {
     file_put_contents($location, $html);
 
     
-    wp_send_json_success(array("message" => "updated successfully", "test" => $html), 200);
+    wp_send_json_success(array("message" => "updated successfully"), 200);
     exit();
 }
 

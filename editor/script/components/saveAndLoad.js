@@ -1,13 +1,17 @@
-import Fields from "./fields.js"
 import Form from "./form.js"
 import FormPage from "./formPage.js"
+import Header from "./header.js"
 
 export default class SaveAndLoad {
-    constructor(form){
+    constructor(form, header){
         /**
          * @type {Form}
          */
         this.form = form
+        /**
+         * @type {Header}
+         */
+        this.header = header
 
         this.load()
     }
@@ -45,13 +49,22 @@ export default class SaveAndLoad {
         this.form.setFormName(json.formName)
     }
 
+    exportSettings(){
+        const settings = {
+            email: this.header.getEmailSettings()
+        }
+
+        return JSON.stringify(settings)
+    }
+
     async save() {
         const json = this.export()
 
         const response = await this.ajaxFetch({
             action: "fmcr_saveForm",
             data: json,
-            html: this.form.generatePage()
+            html: this.form.generatePage(),
+            settings: this.exportSettings()
         })
         
         console.log(response)
@@ -63,6 +76,12 @@ export default class SaveAndLoad {
         })
 
         this.import(response)
+        
+        this.header.setEmailSettings({
+            senderName: response.senderName,
+            senderEmail: response.senderEmail,
+            sendEmailTo: response.sendEmailTo
+        })
     }
 
     async ajaxFetch(content) {

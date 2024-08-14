@@ -418,3 +418,20 @@
     padding: 5px;
     color: rgb(94, 94, 94);
 }
+
+#content {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 10px;
+}
+
+#content > h2 {
+    margin: 3px;
+}
+
+#content > hr {
+    height: 1px;
+    width: 100%;
+    background-color: rgb(202, 202, 202);
+}

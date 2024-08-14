@@ -128,7 +128,7 @@ function fmcr_enqueue_scripts($hook) {
 
 // Send email
 function fmcr_send_email($sender_name, $sender_email, $to, $subject, $message) {
-    $header = 'From: '."=?UTF-8?B?".base64_encode($sender_email)."?=".' <'.$sender_email.'>';
+    $header = 'From: '."=?UTF-8?B?".base64_encode($sender_name)."?=".' <'.$sender_email.'>';
 
     return wp_mail( $to, $subject, $message, $header);
 }

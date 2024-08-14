@@ -30,6 +30,9 @@ function fmcr_create_database_table() {
         json text NOT NULL,
         lastEditDate datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
         createDate datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+        senderName tinytext NOT NULL,
+        senderEmail tinytext NOT NULL,
+        sendEmailTo tinytext NOT NULL,
         PRIMARY KEY  (id)
     ) $charset_collate;";
 

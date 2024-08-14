@@ -15,9 +15,8 @@ const btns = new BtnFields()
 const menu = new Menu(document.getElementById("menuContent"))
 const form = new Form(menu, btns, document.getElementById("forms"), document.getElementById("selectPage"), document.getElementById("formName"))
 const dragAndDrop = new DragAndDrop(form, document.body, document.getElementById("magnifier"))
-
-const header = new Header(document.getElementById("navbar"), document.getElementById("view"))
-const saveAndLoad = new SaveAndLoad(form)
+const header = new Header(document.getElementById("navbar"), document.getElementById("view"), document.getElementById("content"))
+const saveAndLoad = new SaveAndLoad(form, header)
 
 document.getElementById("save").addEventListener("click", (e) => {
     saveAndLoad.save()

@@ -1,5 +1,10 @@
 export default class Header {
-    constructor(navbar, view){
+    senderName= ""
+    senderEmail = ""
+
+    sendEmailTo = ""
+
+    constructor(navbar, view, content){
         /**
          * @type {HTMLElement}
          */
@@ -8,6 +13,10 @@ export default class Header {
          * @type {HTMLElement}
          */
         this.view = view
+        /**
+         * @type {HTMLElement}
+         */
+        this.content = content
 
         this.getClickOut = this.getClickOut.bind(this);
 
@@ -23,9 +32,30 @@ export default class Header {
     }
 
     showSettings() {
-        //this.view.innerHTML = `
-        //    tste
-        //`
+        this.content.innerHTML = `
+            <h2>Email Setup</h2>
+            <hr>
+            <input type="text" placeholder="Sender name" value="${this.senderName}"/>
+            <input type="text" placeholder="Sender email" value="${this.senderEmail}"/>
+            <br>
+            <h2>Email Notifications</h2>
+            <hr>
+            <label>Send Email To</label>
+            <input type="text" placeholder="email@email.com" value="${this.sendEmailTo}"/>
+        `
+        const inputs = this.content.querySelectorAll("input")
+
+        inputs[0].addEventListener("input", (e) =>{
+            this.senderName = e.target.value
+        })
+        inputs[1].addEventListener("input", (e) =>{
+            this.senderEmail = e.target.value
+        })
+
+        inputs[2].addEventListener("input", (e) =>{
+            this.sendEmailTo = e.target.value
+        })
+
         this.showView()
     }
 
@@ -43,5 +73,20 @@ export default class Header {
         if(!e.target.closest("#header")){
             this.hideView()
         }
+    }
+
+    getEmailSettings() {
+        return {
+            senderName: this.senderName,
+            senderEmail: this.senderEmail,
+            sendEmailTo: this.sendEmailTo
+        }
+    }
+
+    setEmailSettings({senderName, senderEmail, sendEmailTo}) {
+        this.senderName = senderName
+        this.senderEmail = senderEmail
+        this.sendEmailTo = sendEmailTo
+        console.log(this)
     }
 }

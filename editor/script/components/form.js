@@ -47,6 +47,12 @@ export default class Form {
         this.formName.addEventListener("input", (e) => {
             this.setFormName(e.target.value)
         })
+
+        const url = new URL(window.location.href);
+        const params = new URLSearchParams(url.search);
+        const id = params.get('id');
+
+        this.form.setAttribute("formid", id)
     }
 
     clear() {

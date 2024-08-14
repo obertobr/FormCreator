@@ -43,6 +43,7 @@ jQuery(document).ready(function($){
     function sendFormData(data){
         data = {
             name: form.attr("formname"),
+            id: form.attr("formid"),
             fields: data
         }
 
