@@ -60,7 +60,7 @@ function fmcr_getEntries() {
 
     $table_name = $wpdb->prefix . 'fmcr_entries';
 
-    $results = $wpdb->get_results( "SELECT id,formName,data FROM $table_name" );
+    $results = $wpdb->get_results( "SELECT id,formName,data FROM $table_name ORDER BY data DESC" );
 
     $entries = $results;
     
