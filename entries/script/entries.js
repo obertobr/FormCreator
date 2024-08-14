@@ -70,15 +70,19 @@ jQuery(document).ready(function($){
 
     async function showEntries(){
         const entries = await getEntries()
+        if(entries == 0){return}
 
         entries.forEach(entry => {
             const line = makeLine(entry,entrySelected)
 
             $entries.append(line)
         });
+
+        getEntry(entries.at(0).id).then(showEntry)
     }
 
     function showEntry(entry) {
+        console.log(entry)
         $entry.find("h1").text(entry.formName)
 
         $("#fmcr-entry-heading").html(`
