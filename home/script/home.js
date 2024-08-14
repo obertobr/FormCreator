@@ -9,6 +9,47 @@ jQuery(document).ready(function($){
         url.set('id', id);
         window.location.search = url;
     })
+
+    function getStartAndEndDates(period) {
+        let startDate, endDate;
+        const today = new Date();
+    
+        switch (period) {
+            case 'week':
+                // Início da semana (segunda-feira)
+                startDate = new Date(today);
+                startDate.setDate(today.getDate() - today.getDay() + 1);
+                // Fim da semana (domingo)
+                endDate = new Date(startDate);
+                endDate.setDate(startDate.getDate() + 6);
+                break;
+    
+            case 'month':
+                // Início do mês
+                startDate = new Date(today.getFullYear(), today.getMonth(), 1);
+                // Fim do mês
+                endDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+                break;
+    
+            case 'year':
+                // Início do ano
+                startDate = new Date(today.getFullYear(), 0, 1);
+                // Fim do ano
+                endDate = new Date(today.getFullYear(), 11, 31);
+                break;
+    
+            default:
+                // Caso personalizado
+                startDate = new Date(period.start_date);
+                endDate = new Date(period.end_date);
+                break;
+        }
+    
+        return {
+            startDate: startDate.toISOString().split('T')[0],
+            endDate: endDate.toISOString().split('T')[0]
+        };
+    }
     
     async function getForms(){
         forms = undefined
@@ -103,4 +144,26 @@ jQuery(document).ready(function($){
     }
 
     showForms()
+
+    const ctx = document.getElementById('acquisitions').getContext('2d');
+    const meuGrafico = new Chart(ctx, {
+        type: 'line', // Tipo de gráfico (ex: 'bar', 'line', 'pie', etc.)
+        data: {
+        labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho'], // Labels do eixo X
+        datasets: [{
+            label: 'Vendas', // Nome do conjunto de dados
+            data: [12, 19, 3, 5, 2, 3], // Dados correspondentes aos labels
+            backgroundColor: 'rgba(75, 192, 192, 0.2)', // Cor de fundo das linhas ou barras
+            borderColor: 'rgba(75, 192, 192, 1)', // Cor da borda
+            borderWidth: 1 // Espessura da borda
+        }]
+        },
+        options: {
+        scales: {
+            y: {
+            beginAtZero: true // Inicia o eixo Y no zero
+            }
+        }
+        }
+    });
 })

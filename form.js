@@ -60,6 +60,19 @@ jQuery(document).ready(function($){
         })
     }
 
+    function sendView(){
+        $.post({
+            url: ajaxScript.url,
+            data: {
+                action: 'fmcr_newView',
+                name: form.attr("formname")
+            },
+            success: function(res) {
+                console.log(res)
+            }
+        })
+    }
+
     submit.on("click", (e) => {
         e.preventDefault()
         sendFormData(getFieldData())
@@ -100,5 +113,7 @@ jQuery(document).ready(function($){
             pages.eq(0).addClass("visible")
         }
     }
+
     multiPage()
+    sendView()
 })
