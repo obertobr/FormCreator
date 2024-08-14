@@ -142,6 +142,7 @@ function fmcr_createForm() {
             'formName' => "form$id",
             'json' => "",
             'lastEditDate' => current_time('mysql'),
+            'createDate' => current_time('mysql'),
             'senderName' => "",
             'senderEmail' => "",
             'sendEmailTo' => "",
