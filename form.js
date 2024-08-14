@@ -74,10 +74,16 @@ jQuery(document).ready(function($){
         })
     }
 
-    submit.on("click", (e) => {
+    submit.on("click", async (e) => {
         e.preventDefault()
-        sendFormData(getFieldData())
+        await sendFormData(getFieldData())
+        formSendSucess()
     })
+
+    function formSendSucess() {
+        form.empty()
+        form.html(`<div class="sucess">FORMULARIO ENVIADO</div>`)
+    }
 
     function multiPage() {
         let pages = $(".form")
