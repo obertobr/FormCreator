@@ -182,7 +182,9 @@ function fmcr_deleteForm() {
         exit();
     }
 
-    $id = $wpdb->insert_id;
+    $file = plugin_dir_path(__FILE__) . "forms/$id.html";
+
+    unlink($file);
     
     wp_send_json_success(array("message" => "removed successfully"), 200);
     exit();
@@ -225,8 +227,8 @@ function fmcr_saveForm() {
         exit();
     }
 
-    $location = plugin_dir_path(__FILE__) . "forms/$id.html";
-    file_put_contents($location, $html);
+    $file = plugin_dir_path(__FILE__) . "forms/$id.html";
+    file_put_contents($file, $html);
 
     
     wp_send_json_success(array("message" => "updated successfully"), 200);
