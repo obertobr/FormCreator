@@ -267,7 +267,7 @@ function fmcr_getForms() {
 
     $table_name = $wpdb->prefix . 'fmcr_forms';
 
-    $forms = $wpdb->get_results( "SELECT id,formName,lastEditDate FROM $table_name" );
+    $forms = $wpdb->get_results( "SELECT id,formName,lastEditDate FROM $table_name ORDER BY lastEditDate DESC" );
     
     wp_send_json( $forms, 200);
     exit();
