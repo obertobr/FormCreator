@@ -16,6 +16,10 @@
 }
 
 /* Form */
+.form {
+    width: 500px;
+}
+
 #forms > .form:not(.visible){
     display: none;
 }
@@ -52,7 +56,7 @@
     padding-block-end: 0.67em;
 }
 
-/* Form */
+/* Input */
 .form > .input {
     display: flex;
     justify-content: end;

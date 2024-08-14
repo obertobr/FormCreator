@@ -47,18 +47,29 @@ function fmcr_entries() {
     include(plugin_dir_path(__FILE__) . "entries/entries.html");
 }
 
-function fmcr_teste_shortcode() {
+add_shortcode('fmcr', 'fmcr_teste_shortcode');
+function fmcr_teste_shortcode($atts = [], $tag = '') {
+
+    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+
+    $atts = shortcode_atts(
+		array(
+			'id' => '0',
+		), $atts, $tag
+	);
+
+    $file = plugin_dir_path(__FILE__) . "forms/".$atts['id'].".html";
+
     ob_start();
-
-    include(plugin_dir_path(__FILE__) . "editor/teste.html");
-
+    if (file_exists($file)) {
+        include($file);
+    } else {
+        include(plugin_dir_path(__FILE__) . "forms/0.html");
+    }
     return ob_get_clean();
 }
 
-add_shortcode('fmcr', 'fmcr_teste_shortcode');
-
-
-// Add style and script on form page+
+// Add style and script on form page
 add_action('wp_enqueue_scripts', 'fmcr_enqueue_scripts');
 add_action('admin_enqueue_scripts', 'fmcr_enqueue_scripts');
 function fmcr_enqueue_scripts($hook) {

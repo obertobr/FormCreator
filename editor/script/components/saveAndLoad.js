@@ -50,7 +50,8 @@ export default class SaveAndLoad {
 
         const response = await this.ajaxFetch({
             action: "fmcr_saveForm",
-            data: json
+            data: json,
+            html: this.form.generatePage()
         })
         
         console.log(response)

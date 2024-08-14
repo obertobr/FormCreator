@@ -103,7 +103,11 @@ export default class Form {
             e.remove()
         })
 
-        console.log(clone.outerHTML)
+        clone.querySelector("#plus").remove()
+
+        clone.removeAttribute("style")
+
+        return clone.outerHTML
     }
 
     setFormName(name) {

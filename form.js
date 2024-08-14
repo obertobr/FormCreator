@@ -111,6 +111,8 @@ jQuery(document).ready(function($){
             })
 
             pages.eq(0).addClass("visible")
+        } else {
+            pages.addClass("visible")
         }
     }
 

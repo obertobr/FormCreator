@@ -172,6 +172,8 @@ add_action("wp_ajax_fmcr_saveForm", "fmcr_saveForm");
 add_action("wp_ajax_nopriv_fmcr_saveForm", "fmcr_saveForm");
 function fmcr_saveForm() {
     $id = intval($_POST['id']);
+    $html = $_POST['html'];
+    $html = str_replace('\\','', $html);
     $data = $_POST['data'];
     $data = str_replace('\\','', $data);
     $data = json_decode($data);
@@ -195,8 +197,12 @@ function fmcr_saveForm() {
         wp_send_json_error(array("error" => "Failed to update data into the database"), 500);
         exit();
     }
+
+    $location = plugin_dir_path(__FILE__) . "forms/$id.html";
+    file_put_contents($location, $html);
+
     
-    wp_send_json_success(array("message" => "updated successfully"), 200);
+    wp_send_json_success(array("message" => "updated successfully", "test" => $html), 200);
     exit();
 }
 
